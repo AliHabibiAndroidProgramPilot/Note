@@ -3,4 +3,7 @@
     <string name="txt_main_page_title">Hello, My Note</string>
     <string name="setting_icon">setting icon</string>
     <string name="search_bar_hint">Search here</string>
+    <string name="delete_icon">delete_icon</string>
+    <string name="lorem_ipsum">Lorem ipsum odor amet, consectetuer adipiscing elit. Fermentum vel iaculis interdum praesent; congue felis. Hendrerit sit conubia sapien sollicitudin, parturient faucibus sociosqu phasellus. Ullamcorper lorem duis erat nascetur ad, consectetur ultricies. Litora lobortis cursus venenatis facilisis efficitur purus. Congue condimentum convallis turpis quam risus velit. Vitae amet in dapibus leo augue. Ullamcorper lacus euismod luctus cubilia montes accumsan vel curabitur. At urna viverra torquent nulla taciti auctor fames scelerisque ad. Euismod dolor pulvinar vehicula efficitur bibendum tempus fringilla ugue. Ullamcorper lacus euismod luctus cubilia montes accumsan vel curabitur. At urna viverra torquent nulla taciti auctor fames scelerisque ad. Euismod dolor pulvinar vehicula efficitur bibendum tempus fringilla.
+    </string>
 </resources>
