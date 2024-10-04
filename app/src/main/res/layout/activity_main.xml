@@ -52,14 +52,28 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_addNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="auto"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="44dp"
+        android:src="@drawable/ic_add"
+        app:maxImageSize="32dp"
+        app:elevation="10dp"
+        android:contentDescription="@string/add_note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="5dp"
+        tools:listitem="@layout/note_list_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_app" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
