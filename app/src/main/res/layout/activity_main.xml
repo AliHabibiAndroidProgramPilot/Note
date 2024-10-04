@@ -33,6 +33,15 @@
                 android:contentDescription="@string/navigationDrawer_icon"
                 android:src="@drawable/ic_menu" />
 
+            <com.google.android.material.search.SearchBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="@string/search_bar_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
         </com.google.android.material.appbar.MaterialToolbar>
 
         <TextView
@@ -40,7 +49,7 @@
             android:layout_width="202dp"
             android:layout_height="130dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:gravity="start"
             android:text="@string/txt_main_page_title"
             android:textAlignment="viewStart"
@@ -62,14 +71,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView" />
 
-        <com.google.android.material.search.SearchBar
+       <!-- <com.google.android.material.search.SearchBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:hint="@string/search_bar_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
