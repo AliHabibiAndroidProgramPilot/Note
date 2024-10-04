@@ -2,4 +2,5 @@
     <string name="app_name">Note</string>
     <string name="txt_main_page_title">Hello, My Note</string>
     <string name="setting_icon">setting icon</string>
+    <string name="search_bar_hint">Search here</string>
 </resources>
