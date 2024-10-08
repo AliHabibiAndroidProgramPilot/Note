@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">Note</string>
     <string name="txt_main_page_title">Hello, My Note</string>
-    <string name="setting_icon">setting icon</string>
+    <string name="setting_icon">Setting icon</string>
     <string name="search_bar_hint">Search here</string>
-    <string name="delete_icon">delete_icon</string>
+    <string name="delete_icon">Delete_icon</string>
     <string name="lorem_ipsum">Lorem ipsum odor amet, consectetuer adipiscing elit. Fermentum vel iaculis interdum praesent; congue felis. Hendrerit sit conubia sapien sollicitudin, parturient faucibus sociosqu phasellus. Ullamcorper lorem duis erat nascetur ad, consectetur ultricies. Litora lobortis cursus venenatis facilisis efficitur purus. Congue condimentum convallis turpis quam risus velit. Vitae amet in dapibus leo augue. Ullamcorper lacus euismod luctus cubilia montes accumsan vel curabitur. At urna viverra torquent nulla taciti auctor fames scelerisque ad. Euismod dolor pulvinar vehicula efficitur bibendum tempus fringilla ugue. Ullamcorper lacus euismod luctus cubilia montes accumsan vel curabitur. At urna viverra torquent nulla taciti auctor fames scelerisque ad. Euismod dolor pulvinar vehicula efficitur bibendum tempus fringilla.
     </string>
-    <string name="add_note">add_note</string>
-    <string name="navigationDrawer_icon">navigationDrawer_icon</string>
+    <string name="add_note">Add_note</string>
+    <string name="navigationDrawer_icon">NavigationDrawer_icon</string>
+    <string name="back_icon">Back_icon</string>
+    <string name="archive_icon">Archive_icon</string>
+    <string name="title">Title</string>
+    <string name="note">Note</string>
+    <string name="assumed_data">28 May, 2024</string>
 </resources>

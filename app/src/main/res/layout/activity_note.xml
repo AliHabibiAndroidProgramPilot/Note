@@ -1,9 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".NoteActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/back_icon"
+            android:src="@drawable/ic_arrow_back" />
+
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="end"
+            android:layout_marginEnd="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/archive_icon"
+            android:src="@drawable/ic_archive" />
+
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="end"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="@string/back_icon"
+            android:src="@drawable/ic_delete" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <TextView
+        android:textSize="16sp"
+        android:text="@string/assumed_data"
+        android:alpha="0.4"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="start"
+        android:inputType="text"
+        android:hint="@string/title"
+        style="@style/Widget.Material3.TextInputEditText.FilledBox"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:autofillHints="AUTOFILL_HINT_NONE"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+    <EditText
+        android:textSize="20sp"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:hint="@string/note"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        style="@style/Widget.Material3.TextInputEditText.FilledBox"
+        android:autofillHints="AUTOFILL_HINT_NONE"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
