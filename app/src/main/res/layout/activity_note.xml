@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,65 +16,68 @@
             android:layout_height="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:focusable="true"
             android:contentDescription="@string/back_icon"
+            android:focusable="true"
             android:src="@drawable/ic_arrow_back" />
 
         <ImageButton
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_gravity="end"
             android:layout_marginEnd="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:focusable="true"
             android:contentDescription="@string/archive_icon"
+            android:focusable="true"
             android:src="@drawable/ic_archive" />
 
         <ImageButton
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_gravity="end"
             android:layout_marginEnd="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:contentDescription="@string/back_icon"
+            android:focusable="true"
             android:src="@drawable/ic_delete" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
-        android:textSize="16sp"
-        android:text="@string/assumed_data"
-        android:alpha="0.4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:alpha="0.4"
+        android:text="@string/assumed_data"
+        android:textSize="16sp" />
 
     <EditText
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:gravity="start"
-        android:inputType="text"
-        android:hint="@string/title"
+        android:id="@+id/edt_noteTitle"
         style="@style/Widget.Material3.TextInputEditText.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="AUTOFILL_HINT_NONE"
+        android:gravity="start"
+        android:hint="@string/title"
+        android:inputType="text"
         android:paddingStart="22dp"
         android:paddingEnd="22dp"
-        android:autofillHints="AUTOFILL_HINT_NONE"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:textSize="20sp"
+        style="@style/Widget.Material3.TextInputEditText.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:autofillHints="AUTOFILL_HINT_NONE"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="start|top"
-        android:inputType="textMultiLine"
         android:hint="@string/note"
+        android:inputType="textMultiLine"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        style="@style/Widget.Material3.TextInputEditText.FilledBox"
-        android:autofillHints="AUTOFILL_HINT_NONE"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:textSize="20sp" />
 
 </LinearLayout>
