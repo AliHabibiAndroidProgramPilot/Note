@@ -8,17 +8,10 @@
     tools:context=".NoteActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        app:navigationIcon="@drawable/ic_arrow_back"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
-
-        <ImageButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/back_icon"
-            android:focusable="true"
-            android:src="@drawable/ic_arrow_back" />
 
         <ImageButton
             android:layout_width="32dp"
