@@ -27,19 +27,12 @@ class NoteActivity : AppCompatActivity() {
     private fun saveNote(noteTitle: String, noteText: String) {
         if (noteTitle.isNotEmpty() || noteText.isNotEmpty()) {
             val note = NotesDataModel(0, noteTitle, noteText, DataBaseHelper.DELETE_STATE_FALSE, getDate())
-            val saveNoteResult = accessDataBase.insertNote(note)
-            if(!saveNoteResult) {
-                Snackbar.make(
-                    binding.root, "Couldn't save note", Snackbar.LENGTH_SHORT
-                ).show()
-
-                TODO("Managing to Stop Closing Add Note Activity When Note didn't Saved" +
-                        "saveNote function can return boolean via insertNote boolean")
-            }
+           accessDataBase.insertNote(note)
         } else if(noteTitle.isEmpty() && noteText.isEmpty()) {
-            Snackbar.make(
-                binding.root, "Empty note discarded", Snackbar.LENGTH_SHORT
-            ).show()
+            val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("SHOW_SNACK_BAR", true)
+            editor.apply()
         }
     }
 
@@ -59,12 +52,12 @@ class NoteActivity : AppCompatActivity() {
     )
 
     override fun onBackPressed() {
-        saveNote(binding.edtNoteTitle.toString(), binding.edtNoteText.toString())
+        saveNote(binding.edtNoteTitle.text.toString(), binding.edtNoteText.text.toString())
         super.onBackPressed()
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        saveNote(binding.edtNoteTitle.toString(), binding.edtNoteText.toString())
+        saveNote(binding.edtNoteTitle.text.toString(), binding.edtNoteText.text.toString())
         onBackPressed()
         return true
     }
