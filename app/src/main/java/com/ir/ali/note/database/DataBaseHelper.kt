@@ -19,6 +19,10 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(
         const val NOTES_TEXT = "Text"
         const val NOTES_DELETE_STATE = "Delete_State"
         const val NOTES_DATA = "Data"
+
+        //Delete State Variables
+        const val DELETE_STATE_FALSE = "0"
+        const val DELETE_STATE_TRUE = "1"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {

@@ -8,6 +8,8 @@ import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.databasedao.NoteDAO
 import com.ir.ali.note.database.notedatamodel.NotesDataModel
 import com.ir.ali.note.databinding.ActivityNoteBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class NoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteBinding
@@ -24,7 +26,7 @@ class NoteActivity : AppCompatActivity() {
 
     private fun saveNote(noteTitle: String, noteText: String) {
         if (noteTitle.isNotEmpty() || noteText.isNotEmpty()) {
-            val note = NotesDataModel(0, noteTitle, noteText, "0", getData())
+            val note = NotesDataModel(0, noteTitle, noteText, DataBaseHelper.DELETE_STATE_FALSE, getDate())
             val saveNoteResult = accessDataBase.insertNote(note)
             if(!saveNoteResult) {
                 Snackbar.make(
@@ -41,8 +43,11 @@ class NoteActivity : AppCompatActivity() {
         }
     }
 
-    private fun getData() : String {
-        return "test"
+    private fun getDate(): String {
+        val currentDate = LocalDate.now()
+        // pattern: 28 May, 2024
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM, yyyy")
+        return currentDate.format(formatter)
     }
 
     @Deprecated(
