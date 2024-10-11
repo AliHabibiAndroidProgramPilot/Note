@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 binding.root,
                 "Empty note discarded",
                 Snackbar.LENGTH_SHORT
-            ).show()
+            ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
             // Clear the shared preferences flag
             val editor = sharedPreferences.edit()
             editor.remove("SHOW_SNACK_BAR")
