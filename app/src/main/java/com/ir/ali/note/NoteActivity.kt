@@ -57,7 +57,6 @@ class NoteActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        saveNote(binding.edtNoteTitle.text.toString(), binding.edtNoteText.text.toString())
         onBackPressed()
         return true
     }
