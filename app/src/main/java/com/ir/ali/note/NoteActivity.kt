@@ -1,9 +1,9 @@
 package com.ir.ali.note
 
+import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.databasedao.NoteDAO
 import com.ir.ali.note.database.notedatamodel.NotesDataModel
@@ -11,6 +11,7 @@ import com.ir.ali.note.databinding.ActivityNoteBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@Suppress("DEPRECATION")
 class NoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteBinding
     private val accessDataBase = NoteDAO(DataBaseHelper(this))
@@ -54,6 +55,17 @@ class NoteActivity : AppCompatActivity() {
     override fun onBackPressed() {
         saveNote(binding.edtNoteTitle.text.toString(), binding.edtNoteText.text.toString())
         super.onBackPressed()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_CLOSE,
+                R.anim.animate_activity_enter,
+                R.anim.animate_activity_exit
+            )
+        } else {
+            this@NoteActivity.overridePendingTransition(
+                R.anim.animate_activity_enter, R.anim.animate_activity_exit
+            )
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
