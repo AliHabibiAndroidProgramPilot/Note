@@ -22,6 +22,7 @@ class NoteDAO(
         contentValues.put(DataBaseHelper.NOTES_TITLE, note.noteTitle)
         contentValues.put(DataBaseHelper.NOTES_TEXT, note.noteText)
         contentValues.put(DataBaseHelper.NOTES_DELETE_STATE, note.noteDeleteState)
-        contentValues.put(DataBaseHelper.NOTES_DATA, note.noteData)
+        contentValues.put(DataBaseHelper.NOTES_ARCHIVE_STATE, note.noteArchiveState)
+        contentValues.put(DataBaseHelper.NOTES_DATE, note.noteData)
     }
 }

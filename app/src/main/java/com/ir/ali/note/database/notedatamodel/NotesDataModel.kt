@@ -5,5 +5,6 @@ data class NotesDataModel(
     var noteTitle: String,
     var noteText: String,
     var noteDeleteState: String,
+    var noteArchiveState: String,
     var noteData: String
 )

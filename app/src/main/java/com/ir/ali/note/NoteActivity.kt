@@ -27,7 +27,14 @@ class NoteActivity : AppCompatActivity() {
 
     private fun saveNote(noteTitle: String, noteText: String) {
         if (noteTitle.isNotEmpty() || noteText.isNotEmpty()) {
-            val note = NotesDataModel(0, noteTitle, noteText, DataBaseHelper.DELETE_STATE_FALSE, getDate())
+            val note = NotesDataModel(
+                0,
+                noteTitle,
+                noteText,
+                DataBaseHelper.DELETE_STATE_FALSE,
+                DataBaseHelper.ARCHIVE_STATE_FALSE,
+                getDate()
+            )
            accessDataBase.insertNote(note)
         } else if(noteTitle.isEmpty() && noteText.isEmpty()) {
             val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)

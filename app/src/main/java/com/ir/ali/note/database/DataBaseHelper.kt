@@ -18,11 +18,16 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(
         const val NOTES_TITLE = "Title"
         const val NOTES_TEXT = "Text"
         const val NOTES_DELETE_STATE = "Delete_State"
-        const val NOTES_DATA = "Data"
+        const val NOTES_ARCHIVE_STATE = "Archive_State"
+        const val NOTES_DATE = "Date"
 
         //Delete State Variables
         const val DELETE_STATE_FALSE = "0"
         const val DELETE_STATE_TRUE = "1"
+
+        //Archive State Variables
+        const val ARCHIVE_STATE_FALSE = "0"
+        const val ARCHIVE_STATE_TRUE = "1"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -32,7 +37,8 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(
                     "$NOTES_TITLE VARCHAR(255)," +
                     "$NOTES_TEXT TEXT," +
                     "$NOTES_DELETE_STATE VARCHAR(1)," +
-                    "$NOTES_DATA VARCHAR(150))"
+                    "$NOTES_ARCHIVE_STATE VARCHAR(1)," +
+                    "$NOTES_DATE VARCHAR(150))"
         )
     }
     //No Need For Upgrade DataBase At This Time.
