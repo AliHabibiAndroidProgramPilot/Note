@@ -28,7 +28,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/back_icon"
@@ -40,7 +39,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/pin_icon"
@@ -92,17 +90,16 @@
     </ScrollView>
 
     <FrameLayout
-        android:elevation="20dp"
-        android:background="@drawable/bg_note_detail"
+        android:elevation="50dp"
         android:layout_width="match_parent"
-        android:layout_height="35dp" >
+        android:layout_height="40dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/assumed_data"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ImageButton
             android:layout_width="48dp"
@@ -111,9 +108,9 @@
             android:layout_marginEnd="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:contentDescription="@string/arrow_up_icon"
             android:focusable="true"
-            android:src="@drawable/ic_arrow_up" />
+            android:contentDescription="@string/arrow_up_icon"
+            android:src="@drawable/ic_menu" />
 
     </FrameLayout>
 

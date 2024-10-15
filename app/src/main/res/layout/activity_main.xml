@@ -31,7 +31,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:contentDescription="@string/navigationDrawer_icon"
-                android:src="@drawable/ic_menu" />
+                android:src="@drawable/ic_menu_navigation" />
 
             <com.google.android.material.search.SearchBar
                 android:layout_width="match_parent"
