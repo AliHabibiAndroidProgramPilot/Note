@@ -11,9 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Note"
+        android:usesCleartextTraffic="false"
+        android:isGame="false"
+        android:installLocation="auto"
         tools:targetApi="31">
         <activity
             android:name=".NoteActivity"
+            android:configChanges="orientation"
+            android:launchMode="standard"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -21,6 +26,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:launchMode="standard"
+            android:configChanges="screenSize|orientation"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
