@@ -14,8 +14,8 @@
         android:layout_height="?attr/actionBarSize">
 
         <ImageButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="end"
             android:layout_marginEnd="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -25,8 +25,8 @@
             android:src="@drawable/ic_archive" />
 
         <ImageButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -37,8 +37,8 @@
 
 
         <ImageButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -52,38 +52,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:alpha="0.4"
         android:text="@string/assumed_data"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/edt_noteTitle"
-        style="@style/Widget.Material3.TextInputEditText.FilledBox"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="AUTOFILL_HINT_NONE"
-        android:gravity="start"
-        android:hint="@string/title"
-        android:inputType="text"
-        android:paddingStart="22dp"
-        android:paddingEnd="22dp"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/edt_noteText"
-        style="@style/Widget.Material3.TextInputEditText.FilledBox"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:autofillHints="AUTOFILL_HINT_NONE"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="start|top"
-        android:hint="@string/note"
-        android:inputType="textMultiLine"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:textSize="18sp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/edt_noteTitle"
+                style="@style/Widget.Material3.TextInputEditText.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="AUTOFILL_HINT_NONE"
+                android:gravity="start"
+                android:hint="@string/title"
+                android:inputType="text"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edt_noteText"
+                style="@style/Widget.Material3.TextInputEditText.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints="AUTOFILL_HINT_NONE"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="start|top"
+                android:hint="@string/note"
+                android:inputType="textMultiLine"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 </LinearLayout>
