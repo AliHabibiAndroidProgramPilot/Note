@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ir.ali.note.databinding.ActivityMainBinding
 
@@ -28,6 +30,9 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+        binding.notesRecycler.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        //binding.notesRecycler.adapter = NoteRecyclerAdapter(this, test)
     }
 
     override fun onResume() {
