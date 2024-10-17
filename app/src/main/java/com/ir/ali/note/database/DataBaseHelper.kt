@@ -21,13 +21,9 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(
         const val NOTES_ARCHIVE_STATE = "Archive_State"
         const val NOTES_DATE = "Date"
 
-        //Delete State Variables
-        const val DELETE_STATE_FALSE = "0"
-        const val DELETE_STATE_TRUE = "1"
-
-        //Archive State Variables
-        const val ARCHIVE_STATE_FALSE = "0"
-        const val ARCHIVE_STATE_TRUE = "1"
+        // State Variables For Delete And Archive State
+        const val STATE_FALSE = "0"
+        const val STATE_TRUE = "1"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {

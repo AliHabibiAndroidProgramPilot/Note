@@ -31,8 +31,8 @@ class NoteActivity : AppCompatActivity() {
                 0,
                 noteTitle,
                 noteText,
-                DataBaseHelper.DELETE_STATE_FALSE,
-                DataBaseHelper.ARCHIVE_STATE_FALSE,
+                DataBaseHelper.STATE_FALSE,
+                DataBaseHelper.STATE_FALSE,
                 getDate()
             )
            accessDataBase.insertNote(note)
