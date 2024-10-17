@@ -7,6 +7,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.ir.ali.note.adapters.NoteRecyclerAdapter
+import com.ir.ali.note.database.DataBaseHelper
+import com.ir.ali.note.database.databasedao.NoteDAO
 import com.ir.ali.note.databinding.ActivityMainBinding
 
 @Suppress("DEPRECATION")
@@ -30,13 +33,27 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
-        binding.notesRecycler.layoutManager =
-            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        //binding.notesRecycler.adapter = NoteRecyclerAdapter(this, test)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initializeNoteRecycler()
     }
 
     override fun onResume() {
         super.onResume()
+        showSnackBar()
+    }
+
+    private fun initializeNoteRecycler() {
+        val dataBaseDAO = NoteDAO(DataBaseHelper((this)))
+        val noteList = dataBaseDAO.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
+        binding.notesRecycler.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.notesRecycler.adapter = NoteRecyclerAdapter(this, noteList)
+    }
+
+    private fun showSnackBar() {
         val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
         if (sharedPreferences.getBoolean("SHOW_SNACK_BAR", false)) {
             Snackbar.make(

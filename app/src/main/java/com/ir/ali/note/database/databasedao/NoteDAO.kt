@@ -23,7 +23,8 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
     fun getNotes(deleted: String, archived: String): ArrayList<NoteDataModel> {
         val accessDataBase = dataBase.readableDatabase
         val sqlQuery: String =
-            "SELECT ${DataBaseHelper.NOTES_ID}, ${DataBaseHelper.NOTES_TITLE}, ${DataBaseHelper.NOTES_TEXT} " +
+            "SELECT ${DataBaseHelper.NOTES_ID}, ${DataBaseHelper.NOTES_TITLE}, " +
+                    "${DataBaseHelper.NOTES_TEXT}, ${DataBaseHelper.NOTES_DATE} " +
                     "FROM ${DataBaseHelper.NOTES_TABLE} " +
                     "WHERE ${DataBaseHelper.NOTES_DELETE_STATE} = ? " +
                     "OR ${DataBaseHelper.NOTES_ARCHIVE_STATE} = ?"
