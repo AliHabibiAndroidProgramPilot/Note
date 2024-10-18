@@ -38,12 +38,13 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="14dp"
+            android:layout_alignBottom="@+id/txt_noteDate"
+            android:layout_alignTop="@+id/txt_noteDate"
             android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:contentDescription="@string/delete_icon"
             android:focusable="true"
+            android:contentDescription="@string/delete_icon"
             android:src="@drawable/ic_delete" />
 
         <TextView

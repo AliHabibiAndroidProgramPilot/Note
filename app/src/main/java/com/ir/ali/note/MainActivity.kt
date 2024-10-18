@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         val dataBaseDAO = NoteDAO(DataBaseHelper((this)))
         val noteList = dataBaseDAO.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
         binding.notesRecycler.layoutManager =
-            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+            LinearLayoutManager(this, RecyclerView.VERTICAL, true)
         binding.notesRecycler.adapter = NoteRecyclerAdapter(this, noteList)
     }
 
