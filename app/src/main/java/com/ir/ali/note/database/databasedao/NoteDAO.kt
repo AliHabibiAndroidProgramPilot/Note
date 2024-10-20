@@ -6,6 +6,9 @@ import android.util.Log
 import com.ir.ali.note.adapters.NoteDataModel
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.notedatamodel.NotesDataModel
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class NoteDAO(private val dataBase: DataBaseHelper) {
     private val contentValues = ContentValues()
@@ -50,7 +53,10 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
                     val text =
                         cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_TEXT))
                     val date =
-                        cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_DATE))
+                        checkDate(
+                            cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_DATE)),
+                            getDate()
+                        )
                     tempData.add(
                         NoteDataModel(id, title, text, date)
                     )
@@ -69,5 +75,38 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         contentValues.put(DataBaseHelper.NOTES_DELETE_STATE, note.noteDeleteState)
         contentValues.put(DataBaseHelper.NOTES_ARCHIVE_STATE, note.noteArchiveState)
         contentValues.put(DataBaseHelper.NOTES_DATE, note.noteData)
+    }
+
+    private fun splitDate(date: String): HashMap<String, String> {
+        val tempDateParts = date.split("[, ]+".toRegex())
+        return hashMapOf(
+            "dayOfWeek" to tempDateParts[0],
+            "monthOfYear" to tempDateParts[1],
+            "year" to tempDateParts[2]
+        )
+    }
+
+    private fun checkDate(noteDate: String, currentDate: String): String {
+        val splitNoteDate = splitDate(noteDate)
+        val splitCurrentDate = splitDate(currentDate)
+        return if (
+            splitNoteDate["dayOfWeek"] == splitCurrentDate["dayOfWeek"] &&
+            splitNoteDate["monthOfYear"] == splitCurrentDate["monthOfYear"] &&
+            splitNoteDate["year"] == splitCurrentDate["year"]
+        ) {
+            // Returns The Today If Note Date Is Today
+            "Today"
+        } else if (splitNoteDate["year"] == splitCurrentDate["year"]) {
+            // Returns Just Month And Date If Note Year Is Same With Current Year
+            splitNoteDate["dayOfWeek"] + " " + splitNoteDate["monthOfYear"]
+        } else
+            noteDate
+    }
+
+    private fun getDate(): String {
+        val currentDate = LocalDate.now()
+        // pattern: 28 May, 2024
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM, yyyy")
+        return currentDate.format(formatter)
     }
 }
