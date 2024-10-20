@@ -4,6 +4,8 @@ import android.app.Activity
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ir.ali.note.MainActivity
 import com.ir.ali.note.databinding.NoteListItemBinding
 
 class NoteRecyclerAdapter(
@@ -34,7 +36,14 @@ class NoteRecyclerAdapter(
 
             //Manage Delete Icon Functionality
             binding.icDeleteNote.setOnClickListener {
-
+                MaterialAlertDialogBuilder(contextActivity).apply {
+                    setTitle("Move this note to trash ?")
+                    setMessage(
+                        "Note will be move to trash, you still can have access to note in trash"
+                    )
+                    setNegativeButton("Cancel") { _, _ -> }
+                    setPositiveButton("Delete") { _, _ -> }
+                }.create().show()
             }
         }
     }
