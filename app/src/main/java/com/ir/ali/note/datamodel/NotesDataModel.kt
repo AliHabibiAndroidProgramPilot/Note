@@ -1,4 +1,4 @@
-package com.ir.ali.note.database.notedatamodel
+package com.ir.ali.note.datamodel
 
 data class NotesDataModel(
     var noteId: Int,

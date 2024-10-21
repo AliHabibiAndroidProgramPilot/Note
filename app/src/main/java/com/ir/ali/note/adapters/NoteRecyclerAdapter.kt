@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ir.ali.note.MainActivity
+import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 import com.ir.ali.note.databinding.NoteListItemBinding
 
 class NoteRecyclerAdapter(
     private val contextActivity: Activity,
-    private val notes: ArrayList<NoteDataModel>
+    private val notes: ArrayList<NoteDataModelForRecycler>
 ) : RecyclerView.Adapter<NoteRecyclerAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -29,7 +29,7 @@ class NoteRecyclerAdapter(
     inner class CustomViewHolder(
         private val binding: NoteListItemBinding
     ) : ViewHolder(binding.root) {
-        fun setData(noteDetails: NoteDataModel) {
+        fun setData(noteDetails: NoteDataModelForRecycler) {
             binding.txtNoteTitle.text = noteDetails.noteTitle
             binding.txtNoteText.text = noteDetails.noteText
             binding.txtNoteDate.text = noteDetails.noteDate

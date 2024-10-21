@@ -1,11 +1,10 @@
-package com.ir.ali.note.database.databasedao
+package com.ir.ali.note.database
 
 import android.content.ContentValues
 import android.database.Cursor
 import android.util.Log
-import com.ir.ali.note.adapters.NoteDataModel
-import com.ir.ali.note.database.DataBaseHelper
-import com.ir.ali.note.database.notedatamodel.NotesDataModel
+import com.ir.ali.note.datamodel.NoteDataModelForRecycler
+import com.ir.ali.note.datamodel.NotesDataModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -22,7 +21,7 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return insertResult > 0
     }
 
-    fun getNotes(deleted: String, archived: String): ArrayList<NoteDataModel> {
+    fun getNotes(deleted: String, archived: String): ArrayList<NoteDataModelForRecycler> {
         val accessDataBase = dataBase.readableDatabase
         val sqlQuery: String =
             "SELECT ${DataBaseHelper.NOTES_ID}, ${DataBaseHelper.NOTES_TITLE}, " +
@@ -40,8 +39,8 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return data
     }
 
-    private fun getDataFromCursor(): ArrayList<NoteDataModel> {
-        val cursorData = ArrayList<NoteDataModel>()
+    private fun getDataFromCursor(): ArrayList<NoteDataModelForRecycler> {
+        val cursorData = ArrayList<NoteDataModelForRecycler>()
         try {
             if (cursor.moveToFirst()) {
                 do {
@@ -57,7 +56,7 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
                             getDate()
                         )
                     cursorData.add(
-                        NoteDataModel(id, title, text, date)
+                        NoteDataModelForRecycler(id, title, text, date)
                     )
                 } while (cursor.moveToNext())
             }

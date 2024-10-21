@@ -6,9 +6,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ir.ali.note.database.DataBaseHelper
-import com.ir.ali.note.database.databasedao.NoteDAO
-import com.ir.ali.note.database.notedatamodel.NotesDataModel
+import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.ActivityNoteBinding
+import com.ir.ali.note.datamodel.NotesDataModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

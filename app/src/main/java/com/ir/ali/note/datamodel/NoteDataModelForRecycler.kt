@@ -1,6 +1,6 @@
-package com.ir.ali.note.adapters
+package com.ir.ali.note.datamodel
 
-data class NoteDataModel(
+data class NoteDataModelForRecycler(
      var noteId: Int,
      var noteTitle: String,
      var noteText: String,

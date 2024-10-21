@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ir.ali.note.adapters.NoteRecyclerAdapter
 import com.ir.ali.note.database.DataBaseHelper
-import com.ir.ali.note.database.databasedao.NoteDAO
+import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.ActivityMainBinding
 
 @Suppress("DEPRECATION")
