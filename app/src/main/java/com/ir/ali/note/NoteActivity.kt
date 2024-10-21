@@ -20,24 +20,30 @@ class NoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //region Set ToolBar as Action Bar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        //endregion
+        //region request Focus
         binding.edtNoteText.requestFocus()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        //endregion
         binding.icDeleteNote.setOnClickListener {
             if (
                 binding.edtNoteTitle.text.isEmpty() && binding.edtNoteText.text.isEmpty()
             )
                 finish()
             else {
+                //region Creat Alert Dialog
                 MaterialAlertDialogBuilder(this).apply {
                     setTitle("Move this note to trash ?")
                     setMessage(
                         "Note will be move to trash, you still can have access to note in trash"
                     )
-                    setNegativeButton("Cancel") { _, _ -> }
-                    setPositiveButton("Delete") { _, _ -> finish() }
+                    setNegativeButton("Cancel") { _, _ -> TODO() }
+                    setPositiveButton("Delete") { _, _ ->  TODO() }
                 }.create().show()
+                //endregion
             }
         }
     }
@@ -77,8 +83,10 @@ class NoteActivity : AppCompatActivity() {
     )
 
     override fun onBackPressed() {
+        // Start Save Not Immediately After User Wants to Get Back to Main Page
         saveNote(binding.edtNoteTitle.text.toString(), binding.edtNoteText.text.toString())
         super.onBackPressed()
+        //region Back to Main Page With Animation
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             overrideActivityTransition(
                 OVERRIDE_TRANSITION_CLOSE,
@@ -90,6 +98,7 @@ class NoteActivity : AppCompatActivity() {
                 R.anim.animate_activity_enter, R.anim.animate_activity_exit
             )
         }
+        //endregion
     }
 
     override fun onSupportNavigateUp(): Boolean {

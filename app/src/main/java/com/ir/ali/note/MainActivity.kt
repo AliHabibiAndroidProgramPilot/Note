@@ -20,7 +20,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.fabAddNote.setOnClickListener {
+            // Intent to Note Activity
             startActivity(Intent(this, NoteActivity::class.java))
+            //region Intent With Animation
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 overrideActivityTransition(
                     OVERRIDE_TRANSITION_OPEN,
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                     R.anim.animate_activity_enter, R.anim.animate_activity_exit
                 )
             }
+            //endregion
         }
     }
 

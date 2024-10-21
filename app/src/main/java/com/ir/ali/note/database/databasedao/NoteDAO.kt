@@ -7,7 +7,6 @@ import com.ir.ali.note.adapters.NoteDataModel
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.notedatamodel.NotesDataModel
 import java.time.LocalDate
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class NoteDAO(private val dataBase: DataBaseHelper) {
@@ -42,7 +41,7 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
     }
 
     private fun getDataFromCursor(): ArrayList<NoteDataModel> {
-        val tempData = ArrayList<NoteDataModel>()
+        val cursorData = ArrayList<NoteDataModel>()
         try {
             if (cursor.moveToFirst()) {
                 do {
@@ -57,7 +56,7 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
                             cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_DATE)),
                             getDate()
                         )
-                    tempData.add(
+                    cursorData.add(
                         NoteDataModel(id, title, text, date)
                     )
                 } while (cursor.moveToNext())
@@ -65,7 +64,7 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         } catch (e: IllegalArgumentException) {
             Log.e("IllegalArgumentException", e.cause.toString())
         }
-        return tempData
+        return cursorData
     }
 
     private fun setContentValues(note: NotesDataModel) {
