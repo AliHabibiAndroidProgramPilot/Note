@@ -11,14 +11,18 @@ import com.ir.ali.note.adapters.NoteRecyclerAdapter
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.ActivityMainBinding
+import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var databaseDao: NoteDAO
+    private lateinit var recyclerAdapter: NoteRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initializeNoteRecycler()
         binding.fabAddNote.setOnClickListener {
             // Intent to Note Activity
             startActivity(Intent(this, NoteActivity::class.java))
@@ -40,7 +44,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        initializeNoteRecycler()
+        val newData: ArrayList<NoteDataModelForRecycler> =
+            databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
+        recyclerAdapter.changedNoteData(newData)
     }
 
     override fun onResume() {
@@ -49,11 +55,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeNoteRecycler() {
-        val dataBaseDAO = NoteDAO(DataBaseHelper((this)))
-        val noteList = dataBaseDAO.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
+        databaseDao = NoteDAO(DataBaseHelper((this)))
+        val noteList = databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
         binding.notesRecycler.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, true)
-        binding.notesRecycler.adapter = NoteRecyclerAdapter(this, noteList)
+        recyclerAdapter = NoteRecyclerAdapter(this, noteList)
+        binding.notesRecycler.adapter = recyclerAdapter
     }
 
     private fun showSnackBar() {

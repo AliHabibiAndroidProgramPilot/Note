@@ -10,7 +10,7 @@ import com.ir.ali.note.databinding.NoteListItemBinding
 
 class NoteRecyclerAdapter(
     private val contextActivity: Activity,
-    private val notes: ArrayList<NoteDataModelForRecycler>
+    private var notes: ArrayList<NoteDataModelForRecycler>
 ) : RecyclerView.Adapter<NoteRecyclerAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -25,6 +25,13 @@ class NoteRecyclerAdapter(
     }
 
     override fun getItemCount() = notes.size
+
+    fun changedNoteData(newData: ArrayList<NoteDataModelForRecycler>) {
+        if (newData.size > notes.size) {
+            notes = newData
+            notifyItemInserted(notes.size)
+        }
+    }
 
     inner class CustomViewHolder(
         private val binding: NoteListItemBinding
