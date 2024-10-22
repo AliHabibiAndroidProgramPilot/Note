@@ -5,12 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ir.ali.note.database.DataBaseHelper
+import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 import com.ir.ali.note.databinding.NoteListItemBinding
 
 class NoteRecyclerAdapter(
     private val contextActivity: Activity,
-    private var notes: ArrayList<NoteDataModelForRecycler>
+    private var notes: ArrayList<NoteDataModelForRecycler>,
+    private val databaseDao: NoteDAO
 ) : RecyclerView.Adapter<NoteRecyclerAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -48,8 +51,13 @@ class NoteRecyclerAdapter(
                     setMessage(
                         "Note will be move to trash, you still can have access to note in trash"
                     )
+                    setPositiveButton("Delete") { _, _ ->
+                        val updateResult =
+                            databaseDao.updateNote(noteDetails.noteId, DataBaseHelper.STATE_TRUE)
+                        notes.removeAt(layoutPosition)
+                        notifyItemRemoved(layoutPosition)
+                    }
                     setNegativeButton("Cancel") { _, _ -> }
-                    setPositiveButton("Delete") { _, _ -> }
                 }.create().show()
             }
         }

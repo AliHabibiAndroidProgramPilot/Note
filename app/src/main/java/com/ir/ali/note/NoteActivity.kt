@@ -34,7 +34,7 @@ class NoteActivity : AppCompatActivity() {
             )
                 finish()
             else {
-                //region Creat Alert Dialog
+                //region Create Alert Dialog
                 MaterialAlertDialogBuilder(this).apply {
                     setTitle("Move this note to trash ?")
                     setMessage(

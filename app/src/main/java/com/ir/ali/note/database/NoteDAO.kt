@@ -28,7 +28,7 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
                     "${DataBaseHelper.NOTES_TEXT}, ${DataBaseHelper.NOTES_DATE} " +
                     "FROM ${DataBaseHelper.NOTES_TABLE} " +
                     "WHERE ${DataBaseHelper.NOTES_DELETE_STATE} = ? " +
-                    "OR ${DataBaseHelper.NOTES_ARCHIVE_STATE} = ?"
+                    "AND ${DataBaseHelper.NOTES_ARCHIVE_STATE} = ?"
         cursor = accessDataBase.rawQuery(
             sqlQuery,
             arrayOf(deleted, archived)
@@ -37,6 +37,25 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         cursor.close()
         accessDataBase.close()
         return data
+    }
+
+    fun updateNote(noteId: Int, noteDeleteState: String): Boolean {
+        val accessDataBase = dataBase.writableDatabase
+        contentValues.clear()
+        contentValues.put(DataBaseHelper.NOTES_DELETE_STATE, noteDeleteState)
+        val updateResult =
+            accessDataBase.update(
+                DataBaseHelper.NOTES_TABLE,
+                contentValues,
+                "${DataBaseHelper.NOTES_ID} = ?",
+                arrayOf(noteId.toString())
+            )
+        accessDataBase.close()
+        return updateResult > 0
+    }
+
+    fun updateNote(noteId: Int, note: NotesDataModel): Boolean {
+        return false
     }
 
     private fun getDataFromCursor(): ArrayList<NoteDataModelForRecycler> {
