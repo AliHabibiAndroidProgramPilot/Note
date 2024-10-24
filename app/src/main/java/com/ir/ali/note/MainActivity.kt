@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         initializeNoteRecycler()
         binding.fabAddNote.setOnClickListener {
             // Intent to Note Activity
-            startActivity(Intent(this, NoteActivity::class.java))
+            startActivity(Intent(this, NoteActivity::class.java)
+                .putExtra("IS_NEW_NOTE", true))
             //region Intent With Animation
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 overrideActivityTransition(

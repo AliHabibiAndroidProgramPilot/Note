@@ -39,7 +39,18 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return data
     }
 
-    fun updateNote(noteId: Int, noteDeleteState: String): Boolean {
+    fun getNoteById(noteId: Int): NotesDataModel {
+        val accessDataBase = dataBase.readableDatabase
+        val sqlQuery =
+            "SELECT * FROM ${DataBaseHelper.NOTES_TABLE} WHERE ${DataBaseHelper.NOTES_ID} = ?"
+        cursor = accessDataBase.rawQuery(sqlQuery, arrayOf(noteId.toString()))
+        val data = getDataFromCursorById()
+        cursor.close()
+        accessDataBase.close()
+        return data
+    }
+
+    fun updateNoteDeleteState(noteId: Int, noteDeleteState: String): Boolean {
         val accessDataBase = dataBase.writableDatabase
         contentValues.clear()
         contentValues.put(DataBaseHelper.NOTES_DELETE_STATE, noteDeleteState)
@@ -54,8 +65,32 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return updateResult > 0
     }
 
+    fun updateNoteArchiveState(noteId: Int, noteArchiveState: String): Boolean {
+        val accessDataBase = dataBase.writableDatabase
+        contentValues.clear()
+        contentValues.put(DataBaseHelper.NOTES_ARCHIVE_STATE, noteArchiveState)
+        val updateResult =
+            accessDataBase.update(
+                DataBaseHelper.NOTES_TABLE,
+                contentValues,
+                "${DataBaseHelper.NOTES_ID} = ?",
+                arrayOf(noteId.toString())
+            )
+        accessDataBase.close()
+        return updateResult > 0
+    }
+
     fun updateNote(noteId: Int, note: NotesDataModel): Boolean {
-        return false
+        val accessDataBase = dataBase.writableDatabase
+        setContentValues(note)
+        val updateResult =
+            accessDataBase.update(
+                DataBaseHelper.NOTES_TABLE,
+                contentValues,
+                "${DataBaseHelper.NOTES_ID} = ?",
+                arrayOf(noteId.toString())
+            )
+        return updateResult > 0
     }
 
     private fun getDataFromCursor(): ArrayList<NoteDataModelForRecycler> {
@@ -85,13 +120,37 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return cursorData
     }
 
+    private fun getDataFromCursorById(): NotesDataModel {
+        val tempNoteData =
+            NotesDataModel(0, "", "", "", "", "")
+        try {
+            if (cursor.moveToFirst()) {
+                tempNoteData.noteId =
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_ID))
+                tempNoteData.noteTitle =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_TITLE))
+                tempNoteData.noteText =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_TEXT))
+                tempNoteData.noteDeleteState =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_DELETE_STATE))
+                tempNoteData.noteArchiveState =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_ARCHIVE_STATE))
+                tempNoteData.noteDate =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.NOTES_DATE))
+            }
+        } catch (e: IllegalArgumentException) {
+            Log.e("IllegalArgumentException", e.cause.toString())
+        }
+        return tempNoteData
+    }
+
     private fun setContentValues(note: NotesDataModel) {
         contentValues.clear()
         contentValues.put(DataBaseHelper.NOTES_TITLE, note.noteTitle)
         contentValues.put(DataBaseHelper.NOTES_TEXT, note.noteText)
         contentValues.put(DataBaseHelper.NOTES_DELETE_STATE, note.noteDeleteState)
         contentValues.put(DataBaseHelper.NOTES_ARCHIVE_STATE, note.noteArchiveState)
-        contentValues.put(DataBaseHelper.NOTES_DATE, note.noteData)
+        contentValues.put(DataBaseHelper.NOTES_DATE, note.noteDate)
     }
 
     private fun splitDate(date: String): HashMap<String, String> {

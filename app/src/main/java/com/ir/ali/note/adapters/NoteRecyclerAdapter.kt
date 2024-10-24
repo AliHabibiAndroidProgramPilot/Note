@@ -1,10 +1,15 @@
 package com.ir.ali.note.adapters
 
 import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ir.ali.note.NoteActivity
+import com.ir.ali.note.R
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.datamodel.NoteDataModelForRecycler
@@ -53,12 +58,33 @@ class NoteRecyclerAdapter(
                     )
                     setPositiveButton("Delete") { _, _ ->
                         val updateResult =
-                            databaseDao.updateNote(noteDetails.noteId, DataBaseHelper.STATE_TRUE)
+                            databaseDao.updateNoteDeleteState(noteDetails.noteId, DataBaseHelper.STATE_TRUE)
                         notes.removeAt(layoutPosition)
                         notifyItemRemoved(layoutPosition)
                     }
                     setNegativeButton("Cancel") { _, _ -> }
                 }.create().show()
+            }
+            // Intent to Note Activity To See And Edite Notes
+            binding.secondRoot.setOnClickListener {
+                contextActivity.startActivity(
+                    Intent(contextActivity, NoteActivity::class.java)
+                        .putExtra("IS_NEW_NOTE", false)
+                        .putExtra(DataBaseHelper.NOTES_ID, noteDetails.noteId)
+                )
+                //region Intent With Animation
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    contextActivity.overrideActivityTransition(
+                        AppCompatActivity.OVERRIDE_TRANSITION_OPEN,
+                        R.anim.animate_activity_enter,
+                        R.anim.animate_activity_exit
+                    )
+                } else {
+                    contextActivity.overridePendingTransition(
+                        R.anim.animate_activity_enter, R.anim.animate_activity_exit
+                    )
+                }
+                //endregion
             }
         }
     }
