@@ -85,7 +85,7 @@ class NoteActivity : AppCompatActivity() {
     private fun getDate(): String {
         val currentDate = LocalDate.now()
         // pattern: 12 January
-        val formatter = DateTimeFormatter.ofPattern("dd MMMM")
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM, yyyy")
         return currentDate.format(formatter)
     }
 
