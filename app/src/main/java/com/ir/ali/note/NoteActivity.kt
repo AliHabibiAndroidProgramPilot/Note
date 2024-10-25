@@ -51,7 +51,7 @@ class NoteActivity : AppCompatActivity() {
                     setMessage(
                         "Note will be move to trash, you still can have access to note in trash"
                     )
-                    setNegativeButton("Cancel") { _, _ -> TODO() }
+                    setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
                     setPositiveButton("Delete") { _, _ ->  TODO() }
                 }.create().show()
                 //endregion
