@@ -52,7 +52,7 @@ class NoteActivity : AppCompatActivity() {
                         "Note will be move to trash, you still can have access to note in trash"
                     )
                     setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-                    setPositiveButton("Delete") { _, _ ->  TODO() }
+                    setPositiveButton("Delete") { _, _ -> TODO() }
                 }.create().show()
                 //endregion
             }
@@ -60,26 +60,27 @@ class NoteActivity : AppCompatActivity() {
     }
 
     private fun saveNote(noteTitle: String, noteText: String) {
-        if (noteTitle.isNotEmpty() || noteText.isNotEmpty()) {
-            val note = NotesDataModel(
-                0,
-                noteTitle,
-                noteText,
-                DataBaseHelper.STATE_FALSE,
-                DataBaseHelper.STATE_FALSE,
-                getDate()
-            )
-           databaseDao.insertNote(note)
-        } else if(noteTitle.isEmpty() && noteText.isEmpty()) {
-            val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("SHOW_SNACK_BAR", true)
-            editor.apply()
-        }
+        val note = NotesDataModel(
+            0,
+            noteTitle,
+            noteText,
+            DataBaseHelper.STATE_FALSE,
+            DataBaseHelper.STATE_FALSE,
+            getDate()
+        )
+        databaseDao.insertNote(note)
     }
 
-    private fun changeNote() {
-
+    private fun changeNote(noteId: Int, noteTitle: String, noteText: String) {
+        val note = NotesDataModel(
+            noteId,
+            noteTitle,
+            noteText,
+            DataBaseHelper.STATE_FALSE,
+            DataBaseHelper.STATE_FALSE,
+            getDate()
+        )
+        databaseDao.updateNoteById(noteId, note)
     }
 
     private fun getDate(): String {
@@ -99,10 +100,23 @@ class NoteActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (intent.getBooleanExtra("IS_NEW_NOTE", false)) {
-            // Start Save Note Immediately After User Wants to Get Back to Main Page
-            saveNote(binding.edtNoteTitle.text.toString(), binding.edtNoteText.text.toString())
+            val noteTitle = binding.edtNoteTitle.text.toString()
+            val noteText = binding.edtNoteText.text.toString()
+            if (noteTitle.isNotEmpty() || noteText.isNotEmpty())
+                saveNote(noteTitle, noteText)
+            else if (noteTitle.isEmpty() && noteText.isEmpty()) {
+                val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("SHOW_SNACK_BAR", true)
+                editor.apply()
+            }
         } else {
-            changeNote()
+            val noteTitle: String = binding.edtNoteTitle.text.toString()
+            val noteText: String = binding.edtNoteText.text.toString()
+            val receivedNote: NotesDataModel =
+                databaseDao.getNoteById(intent.getIntExtra(DataBaseHelper.NOTES_ID, 0))
+            if (receivedNote.noteTitle != noteTitle || receivedNote.noteText != noteText)
+                changeNote(receivedNote.noteId, noteTitle, noteText)
         }
         super.onBackPressed()
         //region Back to Main Page With Animation

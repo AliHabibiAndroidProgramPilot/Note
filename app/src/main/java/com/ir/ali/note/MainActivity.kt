@@ -25,8 +25,10 @@ class MainActivity : AppCompatActivity() {
         initializeNoteRecycler()
         binding.fabAddNote.setOnClickListener {
             // Intent to Note Activity
-            startActivity(Intent(this, NoteActivity::class.java)
-                .putExtra("IS_NEW_NOTE", true))
+            startActivity(
+                Intent(this, NoteActivity::class.java)
+                    .putExtra("IS_NEW_NOTE", true)
+            )
             //region Intent With Animation
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 overrideActivityTransition(
@@ -45,14 +47,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val newData: ArrayList<NoteDataModelForRecycler> =
+        val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
+        if (sharedPreferences.getBoolean("SHOW_SNACK_BAR", false)) {
+            showSnackBar()
+            // Clear the shared preferences flag After Showing SnackBar
+            val editor = sharedPreferences.edit()
+            editor.remove("SHOW_SNACK_BAR")
+            editor.apply()
+        }
+        recyclerAdapter.notifyRecycler(
             databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
-        recyclerAdapter.changedNoteData(newData)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        showSnackBar()
+        )
     }
 
     private fun initializeNoteRecycler() {
@@ -65,17 +70,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSnackBar() {
-        val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
-        if (sharedPreferences.getBoolean("SHOW_SNACK_BAR", false)) {
-            Snackbar.make(
-                binding.root,
-                "Empty note discarded",
-                Snackbar.LENGTH_SHORT
-            ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
-            // Clear the shared preferences flag
-            val editor = sharedPreferences.edit()
-            editor.remove("SHOW_SNACK_BAR")
-            editor.apply()
-        }
+        Snackbar.make(
+            binding.root,
+            "Empty note discarded",
+            Snackbar.LENGTH_SHORT
+        ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
     }
 }

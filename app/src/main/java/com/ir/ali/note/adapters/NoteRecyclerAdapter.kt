@@ -1,5 +1,6 @@
 package com.ir.ali.note.adapters
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -35,11 +36,11 @@ class NoteRecyclerAdapter(
 
     override fun getItemCount() = notes.size
 
-    fun changedNoteData(newData: ArrayList<NoteDataModelForRecycler>) {
-        if (newData.size > notes.size) {
-            notes = newData
-            notifyItemInserted(notes.size)
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifyRecycler(changedData: ArrayList<NoteDataModelForRecycler>) {
+        //  Relying On notifyDataSetChanged As A Last Resort
+        notes = changedData
+        notifyDataSetChanged()
     }
 
     inner class CustomViewHolder(

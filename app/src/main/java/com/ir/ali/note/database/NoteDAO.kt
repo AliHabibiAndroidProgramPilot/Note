@@ -50,6 +50,20 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return data
     }
 
+    fun updateNoteById(noteId: Int, note: NotesDataModel): Boolean {
+        val accessDataBase = dataBase.writableDatabase
+        setContentValues(note)
+        val updateResult =
+            accessDataBase.update(
+                DataBaseHelper.NOTES_TABLE,
+                contentValues,
+                "${DataBaseHelper.NOTES_ID} = ?",
+                arrayOf(noteId.toString())
+            )
+        accessDataBase.close()
+        return updateResult > 0
+    }
+
     fun updateNoteDeleteState(noteId: Int, noteDeleteState: String): Boolean {
         val accessDataBase = dataBase.writableDatabase
         contentValues.clear()
@@ -77,19 +91,6 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
                 arrayOf(noteId.toString())
             )
         accessDataBase.close()
-        return updateResult > 0
-    }
-
-    fun updateNote(noteId: Int, note: NotesDataModel): Boolean {
-        val accessDataBase = dataBase.writableDatabase
-        setContentValues(note)
-        val updateResult =
-            accessDataBase.update(
-                DataBaseHelper.NOTES_TABLE,
-                contentValues,
-                "${DataBaseHelper.NOTES_ID} = ?",
-                arrayOf(noteId.toString())
-            )
         return updateResult > 0
     }
 
