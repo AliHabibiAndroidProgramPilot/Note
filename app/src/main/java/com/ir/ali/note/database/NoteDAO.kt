@@ -28,7 +28,8 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
                     "${DataBaseHelper.NOTES_TEXT}, ${DataBaseHelper.NOTES_DATE} " +
                     "FROM ${DataBaseHelper.NOTES_TABLE} " +
                     "WHERE ${DataBaseHelper.NOTES_DELETE_STATE} = ? " +
-                    "AND ${DataBaseHelper.NOTES_ARCHIVE_STATE} = ?"
+                    "AND ${DataBaseHelper.NOTES_ARCHIVE_STATE} = ? " +
+                    "ORDER BY ${DataBaseHelper.NOTES_ID} DESC"
         cursor = accessDataBase.rawQuery(
             sqlQuery,
             arrayOf(deleted, archived)
