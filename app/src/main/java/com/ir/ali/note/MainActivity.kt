@@ -2,8 +2,10 @@ package com.ir.ali.note
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -11,7 +13,6 @@ import com.ir.ali.note.adapters.NoteRecyclerAdapter
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.ActivityMainBinding
-import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -43,6 +44,19 @@ class MainActivity : AppCompatActivity() {
             }
             //endregion
         }
+        val rootDrawerLayout = binding.rootDrawerLayout
+        val navigationDrawerToggle =
+            ActionBarDrawerToggle(
+                this,
+                rootDrawerLayout,
+                R.string.open,
+                R.string.close
+            )
+        navigationDrawerToggle.isDrawerIndicatorEnabled = true
+        navigationDrawerToggle.isDrawerSlideAnimationEnabled = true
+        rootDrawerLayout.addDrawerListener(navigationDrawerToggle)
+        navigationDrawerToggle.syncState()
+        binding.icOpenDrawer.setOnClickListener { rootDrawerLayout.openDrawer(GravityCompat.START) }
     }
 
     override fun onStart() {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/NotesItem"
+            android:icon="@drawable/ic_note"
+            android:checked="true"
+            android:title="@string/notes" />
+        <item
+            android:id="@+id/TrashItem"
+            android:icon="@drawable/ic_delete"
+            android:title="@string/trash" />
+        <item
+            android:id="@+id/ArchiveItem"
+            android:icon="@drawable/ic_archive"
+            android:title="@string/archive" />
+        <item
+            android:id="@+id/SettingItem"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/setting" />
+        <item
+            android:id="@+id/AboutItem"
+            android:icon="@drawable/ic_about"
+            android:title="@string/about_app" />
+
+    </group>
+
+</menu>

@@ -15,4 +15,11 @@
     <string name="assumed_data">Edited 28 May, 2024</string>
     <string name="pin_icon">Pin_icon</string>
     <string name="arrow_up_icon">Arrow_up_icon</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="notes">Notes</string>
+    <string name="trash">Trash</string>
+    <string name="archive">Archive</string>
+    <string name="setting">Setting</string>
+    <string name="about_app">About App</string>
 </resources>
