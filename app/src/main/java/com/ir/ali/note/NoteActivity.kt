@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ir.ali.note.adapters.NoteRecyclerAdapter
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.ActivityNoteBinding
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter
 @Suppress("DEPRECATION")
 class NoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteBinding
+    private lateinit var recyclerAdapter: NoteRecyclerAdapter
     private val databaseDao = NoteDAO(DataBaseHelper(this))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,23 @@ class NoteActivity : AppCompatActivity() {
                         "Note will be move to trash, you still can have access to note in trash"
                     )
                     setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-                    setPositiveButton("Delete") { _, _ -> TODO() }
+                    setPositiveButton("Delete") { _, _ ->
+                        if (intent.getBooleanExtra("IS_NEW_NOTE", false))
+                            finish()
+                        else {
+                            recyclerAdapter = NoteRecyclerAdapter(
+                                this@NoteActivity, databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE), databaseDao
+                            )
+                            val noteId = intent.getIntExtra(DataBaseHelper.NOTES_ID, 0)
+                            databaseDao.updateNoteDeleteState(
+                                noteId, DataBaseHelper.STATE_TRUE
+                            )
+                            recyclerAdapter.notifyRecycler(
+                                databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
+                            )
+                            finish()
+                        }
+                    }
                 }.create().show()
                 //endregion
             }
