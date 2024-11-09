@@ -3,19 +3,23 @@ package com.ir.ali.note
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.ir.ali.note.adapters.NoteRecyclerAdapter
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -56,26 +60,95 @@ class MainActivity : AppCompatActivity() {
         navigationDrawerToggle.syncState()
         binding.icOpenDrawer.setOnClickListener { rootDrawerLayout.openDrawer(GravityCompat.START) }
         binding.navigationView.setNavigationItemSelectedListener {
-            rootDrawerLayout.closeDrawer(GravityCompat.START, true)
+            val recyclerView = binding.notesRecycler
             when(it.itemId) {
                 R.id.NotesItem -> {
-                    Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
+                    if (!recyclerView.isVisible) {
+                        lifecycleScope.launch {
+                            delay(450)
+                            recyclerView.visibility = View.VISIBLE
+                            supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.animate_fragment_change_enter,
+                                    R.anim.animate_fragment_change_exit
+                                )
+                                .remove(Fragment())
+                                .commit()
+                        }
+                    }
                     true
                 }
                 R.id.TrashItem -> {
-                    Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
+                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
+                    if (currentFragment !is TrashFragment) {
+                        lifecycleScope.launch {
+                            delay(450)
+                            recyclerView.visibility = View.INVISIBLE
+                            supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.animate_fragment_change_enter,
+                                    R.anim.animate_fragment_change_exit
+                                )
+                                .replace(R.id.fragmentContainer, TrashFragment())
+                                .commit()
+                        }
+                    }
                     true
                 }
                 R.id.ArchiveItem -> {
-                    Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
+                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
+                    if (currentFragment !is ArchiveFragment) {
+                        lifecycleScope.launch {
+                            delay(450)
+                            recyclerView.visibility = View.INVISIBLE
+                            supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.animate_fragment_change_enter,
+                                    R.anim.animate_fragment_change_exit
+                                )
+                                .replace(R.id.fragmentContainer, ArchiveFragment())
+                                .commit()
+                        }
+                    }
                     true
                 }
                 R.id.SettingItem -> {
-                    Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
+                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
+                    if (currentFragment !is SettingFragment) {
+                        lifecycleScope.launch {
+                            delay(450)
+                            recyclerView.visibility = View.INVISIBLE
+                            supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.animate_fragment_change_enter,
+                                    R.anim.animate_fragment_change_exit
+                                )
+                                .replace(R.id.fragmentContainer, SettingFragment())
+                                .commit()
+                        }
+                    }
                     true
                 }
                 R.id.AboutItem -> {
-                    Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
+                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
+                    if (currentFragment !is AboutFragment) {
+                        lifecycleScope.launch {
+                            delay(450)
+                            recyclerView.visibility = View.INVISIBLE
+                            supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.animate_fragment_change_enter,
+                                    R.anim.animate_fragment_change_exit
+                                )
+                                .replace(R.id.fragmentContainer, AboutFragment())
+                                .commit()
+                        }
+                    }
                     true
                 }
                 else -> false
