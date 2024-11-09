@@ -47,21 +47,15 @@ class NoteRecyclerAdapter(
         private val binding: NoteListItemBinding
     ) : ViewHolder(binding.root) {
         fun setData(noteDetails: NoteDataModelForRecycler) {
+            binding.txtNoteTitle.visibility = if (noteDetails.noteTitle.isEmpty()) View.GONE
+            else
+                View.VISIBLE
+            binding.txtNoteText.visibility = if (noteDetails.noteText.isEmpty()) View.GONE
+            else
+                View.VISIBLE
             binding.txtNoteTitle.text = noteDetails.noteTitle
             binding.txtNoteText.text = noteDetails.noteText
             binding.txtNoteDate.text = noteDetails.noteDate
-            //region Manage Visibility Of Views
-            if (binding.txtNoteTitle.text.isEmpty())
-                binding.txtNoteTitle.visibility = View.GONE
-            if (binding.txtNoteText.text.isEmpty()) {
-                //region Convert px To dp For Setting Padding
-                val density = contextActivity.resources.displayMetrics.density
-                val paddingDp: Int = (20 * density).toInt()
-                binding.txtNoteTitle.setPadding(0, 0, 0, paddingDp)
-                //endregion
-                binding.txtNoteText.visibility = View.GONE
-            }
-            //endregion
             // Manage Delete Icon Functionality
             binding.icDeleteNote.setOnClickListener {
                 MaterialAlertDialogBuilder(contextActivity).apply {
