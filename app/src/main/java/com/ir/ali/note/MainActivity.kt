@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,9 +59,7 @@ class MainActivity : AppCompatActivity() {
         navigationDrawerToggle.syncState()
         binding.navigationView.setItemTextAppearanceActiveBoldEnabled(false)
         binding.navigationView.setNavigationItemSelectedListener {
-            val recyclerView = binding.notesRecycler
-            val fabAddNote = binding.fabAddNote
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.NotesItem -> {
                     if (supportFragmentManager.fragments.isNotEmpty()) {
                         lifecycleScope.launch {
@@ -73,6 +72,10 @@ class MainActivity : AppCompatActivity() {
                                 .remove(supportFragmentManager.fragments.last())
                                 .commit()
                             manageViewsVisibility(true)
+                            supportFragmentManager.popBackStack(
+                                null,
+                                FragmentManager.POP_BACK_STACK_INCLUSIVE
+                            )
                         }
                     }
                     rootDrawerLayout.closeDrawer(GravityCompat.START, true)
@@ -89,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                                     R.anim.animate_fragment_change_exit
                                 )
                                 .replace(R.id.fragmentContainer, TrashFragment())
+                                .addToBackStack(null)
                                 .commit()
                         }
                     }
@@ -106,6 +110,7 @@ class MainActivity : AppCompatActivity() {
                                     R.anim.animate_fragment_change_exit
                                 )
                                 .replace(R.id.fragmentContainer, ArchiveFragment())
+                                .addToBackStack(null)
                                 .commit()
                         }
                     }
@@ -123,6 +128,7 @@ class MainActivity : AppCompatActivity() {
                                     R.anim.animate_fragment_change_exit
                                 )
                                 .replace(R.id.fragmentContainer, SettingFragment())
+                                .addToBackStack(null)
                                 .commit()
                         }
                     }
@@ -140,6 +146,7 @@ class MainActivity : AppCompatActivity() {
                                     R.anim.animate_fragment_change_exit
                                 )
                                 .replace(R.id.fragmentContainer, AboutFragment())
+                                .addToBackStack(null)
                                 .commit()
                         }
                     }
@@ -148,6 +155,17 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+        supportFragmentManager.addOnBackStackChangedListener {
+            when (supportFragmentManager.fragments.lastOrNull()) {
+                is TrashFragment -> binding.navigationView.setCheckedItem(R.id.TrashItem)
+                is ArchiveFragment -> binding.navigationView.setCheckedItem(R.id.ArchiveItem)
+                is SettingFragment -> binding.navigationView.setCheckedItem(R.id.SettingItem)
+                is AboutFragment -> binding.navigationView.setCheckedItem(R.id.AboutItem)
+                null -> binding.navigationView.setCheckedItem(R.id.NotesItem)
+            }
+            if (supportFragmentManager.fragments.isEmpty())
+                manageViewsVisibility(true)
         }
     }
 
@@ -187,10 +205,12 @@ class MainActivity : AppCompatActivity() {
         if (visible) {
             binding.notesRecycler.visibility = View.VISIBLE
             binding.fabAddNote.visibility = View.VISIBLE
+            binding.toolBar.visibility = View.VISIBLE
         }
         else {
             binding.notesRecycler.visibility = View.INVISIBLE
             binding.fabAddNote.visibility = View.INVISIBLE
+            binding.toolBar.visibility = View.INVISIBLE
         }
     }
 }
