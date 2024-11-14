@@ -57,26 +57,29 @@ class MainActivity : AppCompatActivity() {
         navigationDrawerToggle.isDrawerIndicatorEnabled = true
         navigationDrawerToggle.isDrawerSlideAnimationEnabled = true
         rootDrawerLayout.addDrawerListener(navigationDrawerToggle)
-        navigationDrawerToggle.syncState()
         binding.icOpenDrawer.setOnClickListener { rootDrawerLayout.openDrawer(GravityCompat.START) }
+        navigationDrawerToggle.syncState()
+        binding.navigationView.setItemTextAppearanceActiveBoldEnabled(false)
         binding.navigationView.setNavigationItemSelectedListener {
             val recyclerView = binding.notesRecycler
+            val fabAddNote = binding.fabAddNote
             when(it.itemId) {
                 R.id.NotesItem -> {
-                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
                     if (!recyclerView.isVisible) {
                         lifecycleScope.launch {
                             delay(450)
-                            recyclerView.visibility = View.VISIBLE
                             supportFragmentManager.beginTransaction()
                                 .setCustomAnimations(
                                     R.anim.animate_fragment_change_enter,
                                     R.anim.animate_fragment_change_exit
                                 )
-                                .remove(Fragment())
+                                .remove(supportFragmentManager.fragments.last())
                                 .commit()
+                            recyclerView.visibility = View.VISIBLE
+                            fabAddNote.visibility = View.VISIBLE
                         }
                     }
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
                     true
                 }
                 R.id.TrashItem -> {
