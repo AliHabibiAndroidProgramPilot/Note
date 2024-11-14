@@ -4,12 +4,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             val fabAddNote = binding.fabAddNote
             when(it.itemId) {
                 R.id.NotesItem -> {
-                    if (!recyclerView.isVisible) {
+                    if (supportFragmentManager.fragments.isNotEmpty()) {
                         lifecycleScope.launch {
                             delay(450)
                             supportFragmentManager.beginTransaction()
@@ -75,20 +72,17 @@ class MainActivity : AppCompatActivity() {
                                 )
                                 .remove(supportFragmentManager.fragments.last())
                                 .commit()
-                            recyclerView.visibility = View.VISIBLE
-                            fabAddNote.visibility = View.VISIBLE
+                            manageViewsVisibility(true)
                         }
                     }
                     rootDrawerLayout.closeDrawer(GravityCompat.START, true)
                     true
                 }
                 R.id.TrashItem -> {
-                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
-                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
-                    if (currentFragment !is TrashFragment) {
+                    if (supportFragmentManager.fragments.lastOrNull() !is TrashFragment) {
                         lifecycleScope.launch {
                             delay(450)
-                            recyclerView.visibility = View.INVISIBLE
+                            manageViewsVisibility(false)
                             supportFragmentManager.beginTransaction()
                                 .setCustomAnimations(
                                     R.anim.animate_fragment_change_enter,
@@ -98,15 +92,14 @@ class MainActivity : AppCompatActivity() {
                                 .commit()
                         }
                     }
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
                     true
                 }
                 R.id.ArchiveItem -> {
-                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
-                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
-                    if (currentFragment !is ArchiveFragment) {
+                    if (supportFragmentManager.fragments.lastOrNull() !is ArchiveFragment) {
                         lifecycleScope.launch {
                             delay(450)
-                            recyclerView.visibility = View.INVISIBLE
+                            manageViewsVisibility(false)
                             supportFragmentManager.beginTransaction()
                                 .setCustomAnimations(
                                     R.anim.animate_fragment_change_enter,
@@ -116,15 +109,14 @@ class MainActivity : AppCompatActivity() {
                                 .commit()
                         }
                     }
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
                     true
                 }
                 R.id.SettingItem -> {
-                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
-                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
-                    if (currentFragment !is SettingFragment) {
+                    if (supportFragmentManager.fragments.lastOrNull() !is SettingFragment) {
                         lifecycleScope.launch {
                             delay(450)
-                            recyclerView.visibility = View.INVISIBLE
+                            manageViewsVisibility(false)
                             supportFragmentManager.beginTransaction()
                                 .setCustomAnimations(
                                     R.anim.animate_fragment_change_enter,
@@ -134,15 +126,14 @@ class MainActivity : AppCompatActivity() {
                                 .commit()
                         }
                     }
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
                     true
                 }
                 R.id.AboutItem -> {
-                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
-                    val currentFragment = supportFragmentManager.fragments.lastOrNull()
-                    if (currentFragment !is AboutFragment) {
+                    if (supportFragmentManager.fragments.lastOrNull() !is AboutFragment) {
                         lifecycleScope.launch {
                             delay(450)
-                            recyclerView.visibility = View.INVISIBLE
+                            manageViewsVisibility(false)
                             supportFragmentManager.beginTransaction()
                                 .setCustomAnimations(
                                     R.anim.animate_fragment_change_enter,
@@ -152,6 +143,7 @@ class MainActivity : AppCompatActivity() {
                                 .commit()
                         }
                     }
+                    rootDrawerLayout.closeDrawer(GravityCompat.START, true)
                     true
                 }
                 else -> false
@@ -189,5 +181,16 @@ class MainActivity : AppCompatActivity() {
             "Empty note discarded",
             Snackbar.LENGTH_SHORT
         ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
+    }
+
+    private fun manageViewsVisibility(visible: Boolean) {
+        if (visible) {
+            binding.notesRecycler.visibility = View.VISIBLE
+            binding.fabAddNote.visibility = View.VISIBLE
+        }
+        else {
+            binding.notesRecycler.visibility = View.INVISIBLE
+            binding.fabAddNote.visibility = View.INVISIBLE
+        }
     }
 }
