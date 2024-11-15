@@ -1,11 +1,9 @@
 package com.ir.ali.note
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.ir.ali.note.databinding.FragmentTrashBinding
 
 class TrashFragment : Fragment(R.layout.fragment_trash) {
@@ -16,17 +14,29 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTrashBinding.inflate(layoutInflater)
-        // region Set Toolbar as ActionBar
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
-        // endregion
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // region Set Toolbar as ActionBar
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
+        setHasOptionsMenu(true)
+        // endregion
+        // Handle BackPress
+        binding.toolBar.setNavigationOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.trash_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }
 
 }
