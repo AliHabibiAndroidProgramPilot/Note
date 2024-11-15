@@ -19,9 +19,12 @@ import com.ir.ali.note.databinding.NoteListItemBinding
 
 class NoteRecyclerAdapter(
     private val contextActivity: Activity,
-    private var notes: ArrayList<NoteDataModelForRecycler>,
     private val databaseDao: NoteDAO
 ) : RecyclerView.Adapter<NoteRecyclerAdapter.CustomViewHolder>() {
+    private var notes: ArrayList<NoteDataModelForRecycler>
+    init {
+        notes = databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         CustomViewHolder(
@@ -64,8 +67,7 @@ class NoteRecyclerAdapter(
                         "Note will be move to trash, you still can have access to note in trash"
                     )
                     setPositiveButton("Delete") { _, _ ->
-                        val updateResult =
-                            databaseDao.updateNoteDeleteState(noteDetails.noteId, DataBaseHelper.STATE_TRUE)
+                        databaseDao.updateNoteDeleteState(noteDetails.noteId, DataBaseHelper.STATE_TRUE)
                         notes.removeAt(layoutPosition)
                         notifyItemRemoved(layoutPosition)
                     }

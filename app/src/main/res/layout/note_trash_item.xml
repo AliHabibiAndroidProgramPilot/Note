@@ -26,7 +26,7 @@
             android:textStyle="italic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/icDeleteAll"
+            app:layout_constraintEnd_toStartOf="@id/icDeleteNote"
             android:textSize="16sp"
             android:maxWidth="250dp"
             android:gravity="start"
@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/icDeleteAll"
+            android:id="@+id/icDeleteNote"
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"

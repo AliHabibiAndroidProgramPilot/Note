@@ -186,10 +186,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeNoteRecycler() {
         databaseDao = NoteDAO(DataBaseHelper((this)))
-        val noteList = databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
         binding.notesRecycler.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        recyclerAdapter = NoteRecyclerAdapter(this, noteList, databaseDao)
+        recyclerAdapter = NoteRecyclerAdapter(this, databaseDao)
         binding.notesRecycler.adapter = recyclerAdapter
     }
 
