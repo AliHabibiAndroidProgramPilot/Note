@@ -58,15 +58,17 @@ class NoteActivity : AppCompatActivity() {
                         if (intent.getBooleanExtra("IS_NEW_NOTE", false))
                             finish()
                         else {
-                            recyclerAdapter = NoteRecyclerAdapter(
-                                this@NoteActivity, databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE), databaseDao
-                            )
+                            recyclerAdapter =
+                                NoteRecyclerAdapter(this@NoteActivity, databaseDao)
                             val noteId = intent.getIntExtra(DataBaseHelper.NOTES_ID, 0)
                             databaseDao.updateNoteDeleteState(
                                 noteId, DataBaseHelper.STATE_TRUE
                             )
                             recyclerAdapter.notifyRecycler(
-                                databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
+                                databaseDao.getNotes(
+                                    DataBaseHelper.STATE_FALSE,
+                                    DataBaseHelper.STATE_FALSE
+                                )
                             )
                             finish()
                         }
