@@ -41,9 +41,14 @@ class NoteRecyclerAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun notifyRecycler(changedData: ArrayList<NoteDataModelForRecycler>) {
-        //  Relying On notifyDataSetChanged As A Last Resort
-        notes = changedData
-        notifyDataSetChanged()
+        if (changedData.size > notes.size) {
+            notes = changedData
+            notifyItemInserted(notes.size)
+        } else {
+            //  Relying On notifyDataSetChanged As A Last Resort
+            notes = changedData
+            notifyDataSetChanged()
+        }
     }
 
     inner class CustomViewHolder(
