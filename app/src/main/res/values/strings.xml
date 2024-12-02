@@ -24,4 +24,7 @@
     <string name="about_app">About App</string>
     <string name="restore_all">Restore All</string>
     <string name="delete_all">Delete All</string>
+    <string name="app_description">Note is a simple yet powerful note-taking app designed to help you capture your thoughts, ideas, and reminders. Whether you\'re a student, a professional, or simply someone who wants to stay organized, Notely is the perfect tool for you.</string>
+    <string name="github_repository">GitHub Repository:</string>
+    <string name="github_link_repository">https://github.com/AliHabibiAndroidProgramPilot/Note</string>
 </resources>
