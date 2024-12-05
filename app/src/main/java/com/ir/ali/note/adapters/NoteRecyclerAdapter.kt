@@ -14,8 +14,8 @@ import com.ir.ali.note.NoteActivity
 import com.ir.ali.note.R
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
-import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 import com.ir.ali.note.databinding.NoteListItemBinding
+import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 
 class NoteRecyclerAdapter(
     private val contextActivity: Activity,
@@ -41,14 +41,9 @@ class NoteRecyclerAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun notifyRecycler(changedData: ArrayList<NoteDataModelForRecycler>) {
-        if (changedData.size > notes.size) {
-            notes = changedData
-            notifyItemInserted(notes.size)
-        } else {
-            //  Relying On notifyDataSetChanged As A Last Resort
-            notes = changedData
-            notifyDataSetChanged()
-        }
+        //  Relying On notifyDataSetChanged As A Last Resort
+        notes = changedData
+        notifyDataSetChanged()
     }
 
     inner class CustomViewHolder(
