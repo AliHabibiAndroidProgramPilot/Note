@@ -1,5 +1,6 @@
 package com.ir.ali.note.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -30,6 +31,12 @@ class TrashNoteRecyclerAdapter(
     }
 
     override fun getItemCount(): Int = trashNotes.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifyRecycler() {
+        trashNotes.clear()
+        notifyDataSetChanged()
+    }
 
     inner class CustomViewHolder(
         private val binding: NoteTrashItemBinding

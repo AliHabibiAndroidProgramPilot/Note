@@ -13,12 +13,15 @@ import com.ir.ali.note.databinding.FragmentTrashBinding
 
 class TrashFragment : Fragment(R.layout.fragment_trash) {
     private lateinit var binding: FragmentTrashBinding
+    private lateinit var databaseDao: NoteDAO
+    private lateinit var trashNoteAdapter: TrashNoteRecyclerAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTrashBinding.inflate(layoutInflater)
+        databaseDao = NoteDAO(DataBaseHelper(requireContext()))
         return binding.root
     }
 
@@ -39,10 +42,10 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
     private fun initializeTrashRecycler() {
         val fragmentContext = requireContext()
         val dao = NoteDAO(DataBaseHelper(fragmentContext))
-        val trashNoteRecyclerAdapter = TrashNoteRecyclerAdapter(fragmentContext, dao)
+        trashNoteAdapter = TrashNoteRecyclerAdapter(fragmentContext, dao)
         binding.trashRecycler.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.trashRecycler.adapter = trashNoteRecyclerAdapter
+        binding.trashRecycler.adapter = trashNoteAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -51,6 +54,15 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.RestoreAllItems -> {
+
+            }
+            R.id.DeleteAllItems -> {
+                databaseDao.deleteAllTrashNotes()
+                trashNoteAdapter.notifyRecycler()
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
