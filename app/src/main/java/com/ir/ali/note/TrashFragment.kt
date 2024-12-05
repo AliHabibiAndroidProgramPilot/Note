@@ -66,6 +66,8 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
                     DataBaseHelper.STATE_FALSE
                 )
                 mainNotesRecycler.notifyRecycler(changedData)*/
+                databaseDao.updateNoteDeleteState(DataBaseHelper.STATE_FALSE)
+                trashNoteAdapter.notifyRecycler()
             }
             R.id.DeleteAllItems -> {
                 databaseDao.deleteTrashedNotes()

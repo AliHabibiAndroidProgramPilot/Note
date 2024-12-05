@@ -3,6 +3,7 @@ package com.ir.ali.note.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,12 +53,14 @@ class TrashNoteRecyclerAdapter(
             binding.txtNoteText.text = noteDetails.noteText
             binding.txtNoteDate.text = noteDetails.noteDate
             binding.icDeleteNote.setOnClickListener {
-                databaseDao.deleteTrashedNotes(noteDetails.noteId)
                 trashNotes.removeAt(layoutPosition)
                 notifyItemRemoved(layoutPosition)
+                databaseDao.deleteTrashedNotes(noteDetails.noteId)
             }
             binding.icRestoreNote.setOnClickListener {
-
+                trashNotes.removeAt(layoutPosition)
+                notifyItemRemoved(layoutPosition)
+                databaseDao.updateNoteDeleteState(noteDetails.noteId, DataBaseHelper.STATE_FALSE)
             }
             // Intent to Note Activity To See And Edite Notes
             binding.secondRoot.setOnClickListener {

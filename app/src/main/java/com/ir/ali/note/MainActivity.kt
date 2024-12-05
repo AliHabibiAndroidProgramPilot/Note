@@ -162,7 +162,12 @@ class MainActivity : AppCompatActivity() {
                 is ArchiveFragment -> binding.navigationView.setCheckedItem(R.id.ArchiveItem)
                 is SettingFragment -> binding.navigationView.setCheckedItem(R.id.SettingItem)
                 is AboutFragment -> binding.navigationView.setCheckedItem(R.id.AboutItem)
-                null -> binding.navigationView.setCheckedItem(R.id.NotesItem)
+                null -> {
+                    binding.navigationView.setCheckedItem(R.id.NotesItem)
+                    recyclerAdapter.notifyRecycler(
+                        databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
+                    )
+                }
             }
             if (supportFragmentManager.fragments.isEmpty())
                 manageViewsVisibility(true)
