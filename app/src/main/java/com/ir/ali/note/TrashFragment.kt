@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ir.ali.note.adapters.NoteRecyclerAdapter
 import com.ir.ali.note.adapters.TrashNoteRecyclerAdapter
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
@@ -15,6 +16,7 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
     private lateinit var binding: FragmentTrashBinding
     private lateinit var databaseDao: NoteDAO
     private lateinit var trashNoteAdapter: TrashNoteRecyclerAdapter
+    private lateinit var mainNotesRecycler: NoteRecyclerAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,6 +24,7 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
     ): View {
         binding = FragmentTrashBinding.inflate(layoutInflater)
         databaseDao = NoteDAO(DataBaseHelper(requireContext()))
+        mainNotesRecycler = NoteRecyclerAdapter(requireActivity(), databaseDao)
         return binding.root
     }
 
@@ -56,10 +59,16 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.RestoreAllItems -> {
-
+                /*databaseDao.restoreAllTrashNotes()
+                trashNoteAdapter.notifyRecycler()
+                val changedData = databaseDao.getNotes(
+                    DataBaseHelper.STATE_FALSE,
+                    DataBaseHelper.STATE_FALSE
+                )
+                mainNotesRecycler.notifyRecycler(changedData)*/
             }
             R.id.DeleteAllItems -> {
-                databaseDao.deleteAllTrashNotes()
+                databaseDao.deleteTrashedNotes()
                 trashNoteAdapter.notifyRecycler()
             }
         }

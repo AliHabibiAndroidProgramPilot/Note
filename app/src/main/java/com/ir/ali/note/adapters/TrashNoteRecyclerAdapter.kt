@@ -16,10 +16,10 @@ import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 
 class TrashNoteRecyclerAdapter(
     private val context: Context,
-    private val databaseDAO: NoteDAO
+    private val databaseDao: NoteDAO
 ) : Adapter<TrashNoteRecyclerAdapter.CustomViewHolder>() {
     private val trashNotes: ArrayList<NoteDataModelForRecycler> =
-        databaseDAO.getNotes(DataBaseHelper.STATE_TRUE, DataBaseHelper.STATE_FALSE)
+        databaseDao.getNotes(DataBaseHelper.STATE_TRUE, DataBaseHelper.STATE_FALSE)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
         CustomViewHolder(
@@ -52,7 +52,9 @@ class TrashNoteRecyclerAdapter(
             binding.txtNoteText.text = noteDetails.noteText
             binding.txtNoteDate.text = noteDetails.noteDate
             binding.icDeleteNote.setOnClickListener {
-
+                databaseDao.deleteTrashedNotes(noteDetails.noteId)
+                trashNotes.removeAt(layoutPosition)
+                notifyItemRemoved(layoutPosition)
             }
             binding.icRestoreNote.setOnClickListener {
 
