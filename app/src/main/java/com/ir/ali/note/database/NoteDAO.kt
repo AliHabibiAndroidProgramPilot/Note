@@ -95,7 +95,7 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return updateResult > 0
     }
 
-    fun deleteAllTrashNotes(): Boolean {
+    fun deleteTrashedNotes(): Boolean {
         val accessDataBase = dataBase.writableDatabase
         val deleteResult =
             accessDataBase.delete(
@@ -105,6 +105,32 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
             )
         accessDataBase.close()
         return deleteResult > 0
+    }
+
+    fun deleteTrashedNotes(noteId: Int): Boolean {
+        val accessDataBase = dataBase.writableDatabase
+        val deleteResult =
+            accessDataBase.delete(
+                DataBaseHelper.NOTES_TABLE,
+                "${DataBaseHelper.NOTES_ID} = ?",
+                arrayOf(noteId.toString())
+            )
+        accessDataBase.close()
+        return deleteResult > 0
+    }
+
+    fun restoreAllTrashNotes(): Boolean {
+        val accessDatabase = dataBase.writableDatabase
+        contentValues.clear()
+        contentValues.put(DataBaseHelper.NOTES_DELETE_STATE, DataBaseHelper.STATE_FALSE)
+        val updateResult = accessDatabase.update(
+            DataBaseHelper.NOTES_TABLE,
+            contentValues,
+            "${DataBaseHelper.NOTES_DELETE_STATE} = ?",
+            arrayOf(DataBaseHelper.STATE_TRUE)
+        )
+        accessDatabase.close()
+        return updateResult > 0
     }
 
     private fun getDataFromCursor(): ArrayList<NoteDataModelForRecycler> {
