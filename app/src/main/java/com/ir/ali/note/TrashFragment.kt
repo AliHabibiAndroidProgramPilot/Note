@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.ir.ali.note.adapters.TrashNoteRecyclerAdapter
+import com.ir.ali.note.database.DataBaseHelper
+import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.FragmentTrashBinding
 
 class TrashFragment : Fragment(R.layout.fragment_trash) {
@@ -24,10 +29,20 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
         setHasOptionsMenu(true)
         // endregion
+        initializeTrashRecycler()
         // Handle BackPress
         binding.toolBar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    private fun initializeTrashRecycler() {
+        val fragmentContext = requireContext()
+        val dao = NoteDAO(DataBaseHelper(fragmentContext))
+        val trashNoteRecyclerAdapter = TrashNoteRecyclerAdapter(fragmentContext, dao)
+        binding.trashRecycler.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.trashRecycler.adapter = trashNoteRecyclerAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

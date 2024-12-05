@@ -76,7 +76,7 @@ class NoteRecyclerAdapter(
                         notes.removeAt(layoutPosition)
                         notifyItemRemoved(layoutPosition)
                     }
-                    setNegativeButton("Cancel") { _, _ -> }
+                    setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
                 }.create().show()
             }
             // Intent to Note Activity To See And Edite Notes

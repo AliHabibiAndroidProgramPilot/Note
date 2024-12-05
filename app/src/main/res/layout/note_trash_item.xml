@@ -52,7 +52,7 @@
             android:src="@drawable/ic_delete_forever" />
 
         <ImageButton
-            android:id="@+id/icRestoreAll"
+            android:id="@+id/icRestoreNote"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
