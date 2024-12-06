@@ -59,13 +59,6 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.RestoreAllItems -> {
-                /*databaseDao.restoreAllTrashNotes()
-                trashNoteAdapter.notifyRecycler()
-                val changedData = databaseDao.getNotes(
-                    DataBaseHelper.STATE_FALSE,
-                    DataBaseHelper.STATE_FALSE
-                )
-                mainNotesRecycler.notifyRecycler(changedData)*/
                 databaseDao.updateNoteDeleteState(DataBaseHelper.STATE_FALSE)
                 trashNoteAdapter.notifyRecycler()
             }
