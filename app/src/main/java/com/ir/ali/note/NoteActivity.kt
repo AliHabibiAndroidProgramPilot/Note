@@ -55,6 +55,8 @@ class NoteActivity : AppCompatActivity() {
             }
             edtTitle.setOnClickListener(showSnackBar)
             edtText.setOnClickListener(showSnackBar)
+            binding.icArchiveNote.visibility = View.GONE
+            binding.icPinNote.visibility = View.GONE
         }
         if (intent.getBooleanExtra("IS_NEW_NOTE", false)) {
             binding.noteDate.text = getDate()
