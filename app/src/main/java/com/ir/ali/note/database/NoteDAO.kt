@@ -113,6 +113,24 @@ class NoteDAO(private val dataBase: DataBaseHelper) {
         return updateResult > 0
     }
 
+    fun updateNoteArchiveState(noteArchiveState: String): Boolean {
+        val whereClause: String = if (noteArchiveState == DataBaseHelper.STATE_TRUE) {
+            DataBaseHelper.STATE_FALSE
+        } else DataBaseHelper.STATE_TRUE
+        val accessDataBase = dataBase.writableDatabase
+        contentValues.clear()
+        contentValues.put(DataBaseHelper.NOTES_ARCHIVE_STATE, noteArchiveState)
+        val updateResult =
+            accessDataBase.update(
+                DataBaseHelper.NOTES_TABLE,
+                contentValues,
+                "${DataBaseHelper.NOTES_ARCHIVE_STATE} = ?",
+                arrayOf(whereClause)
+            )
+        accessDataBase.close()
+        return updateResult > 0
+    }
+
     fun deleteTrashedNotes(): Boolean {
         val accessDataBase = dataBase.writableDatabase
         val deleteResult =
