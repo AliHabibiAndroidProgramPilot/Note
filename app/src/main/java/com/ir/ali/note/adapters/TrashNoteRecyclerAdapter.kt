@@ -62,11 +62,12 @@ class TrashNoteRecyclerAdapter(
                 notifyItemRemoved(layoutPosition)
                 databaseDao.updateNoteDeleteState(noteDetails.noteId, DataBaseHelper.STATE_FALSE)
             }
-            // Intent to Note Activity To See And Edite Notes
+            // Intent to Note Activity just To See Notes
             binding.secondRoot.setOnClickListener {
                 context.startActivity(
                     Intent(context, NoteActivity::class.java)
                         .putExtra("IS_NEW_NOTE", false)
+                        // Specifies Trash Notes So To Make Edit Texts Not Editable
                         .putExtra("IS_TRASH_NOTE", true)
                         .putExtra(DataBaseHelper.NOTES_ID, noteDetails.noteId)
                 )

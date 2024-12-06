@@ -3,9 +3,11 @@ package com.ir.ali.note
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.ir.ali.note.adapters.NoteRecyclerAdapter
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
@@ -27,6 +29,33 @@ class NoteActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         //endregion
+        if (intent.getBooleanExtra("IS_TRASH_NOTE", false)) {
+            val edtTitle = binding.edtNoteTitle
+            val edtText = binding.edtNoteText
+            edtTitle.isFocusable = false
+            edtTitle.isFocusableInTouchMode = false
+            edtTitle.isCursorVisible = false
+            edtText.isFocusable = false
+            edtText.isFocusableInTouchMode = false
+            edtText.isCursorVisible = false
+            // Used Clickable Flag To Prevent Spam SnackBar By Multiply Clicking
+            var isClickable = true
+            val showSnackBar = View.OnClickListener {
+                if (isClickable) {
+                    Snackbar.make(
+                        binding.root,
+                        "Can't Edit Trashed Notes",
+                        Snackbar.LENGTH_SHORT
+                    ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
+                    isClickable = false
+                    it.postDelayed({
+                        isClickable = true
+                    }, 3500)
+                }
+            }
+            edtTitle.setOnClickListener(showSnackBar)
+            edtText.setOnClickListener(showSnackBar)
+        }
         if (intent.getBooleanExtra("IS_NEW_NOTE", false)) {
             binding.noteDate.text = getDate()
             //region request Focus
