@@ -43,12 +43,12 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
     }
 
     private fun initializeTrashRecycler() {
+        val recyclerView = binding.trashRecycler
         val fragmentContext = requireContext()
-        val dao = NoteDAO(DataBaseHelper(fragmentContext))
-        trashNoteAdapter = TrashNoteRecyclerAdapter(fragmentContext, dao)
-        binding.trashRecycler.layoutManager =
+        recyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.trashRecycler.adapter = trashNoteAdapter
+        recyclerView.adapter =
+            TrashNoteRecyclerAdapter(fragmentContext, databaseDao)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
