@@ -47,7 +47,9 @@ class ArchiveNoteRecyclerAdapter(
             binding.txtNoteText.text = noteDetails.noteText
             binding.txtNoteDate.text = noteDetails.noteDate
             binding.icUnarchive.setOnClickListener{
-                // TODO UNARCHIVE FROM LIST AND DATABASE
+                archiveNotes.removeAt(layoutPosition)
+                notifyItemRemoved(layoutPosition)
+                databaseDao.updateNoteArchiveState(noteDetails.noteId, DataBaseHelper.STATE_FALSE)
             }
             binding.secondRoot.setOnClickListener {
                 context.startActivity(
