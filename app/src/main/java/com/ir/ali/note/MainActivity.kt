@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -176,12 +177,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
-        if (sharedPreferences.getBoolean("SHOW_SNACK_BAR", false)) {
-            showSnackBar()
-            // Clear the shared preferences flag After Showing SnackBar
-            val editor = sharedPreferences.edit()
-            editor.remove("SHOW_SNACK_BAR")
+        val sharedPreferences1 = getSharedPreferences("EMPTY_NOTE_SNACK_BAR", MODE_PRIVATE)
+        val sharedPreferences2 = getSharedPreferences("ARCHIVE_SNACK_BAR", MODE_PRIVATE)
+        if (sharedPreferences1.getBoolean("SHOW_EMPTY_NOTE_SNACK_BAR", false)) {
+            showSnackBar("Empty note discarded")
+            // Clear The Shared Preferences Flag After Showing SnackBar
+            val editor = sharedPreferences1.edit()
+            editor.remove("SHOW_EMPTY_NOTE_SNACK_BAR")
+            editor.apply()
+        }
+        if (sharedPreferences2.getBoolean("SHOW_ARCHIVE_SNACK_BAR", false)) {
+            showSnackBar("Note archived")
+            // Clear The Shared Preferences Flag After Showing SnackBar
+            val editor = sharedPreferences2.edit()
+            editor.remove("SHOW_ARCHIVE_SNACK_BAR")
             editor.apply()
         }
         recyclerAdapter.notifyRecycler(
@@ -197,10 +206,10 @@ class MainActivity : AppCompatActivity() {
         binding.notesRecycler.adapter = recyclerAdapter
     }
 
-    private fun showSnackBar() {
+    private fun showSnackBar(text: CharSequence) {
         Snackbar.make(
             binding.root,
-            "Empty note discarded",
+            text,
             Snackbar.LENGTH_SHORT
         ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
     }

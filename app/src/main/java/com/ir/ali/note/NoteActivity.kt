@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ir.ali.note.adapters.NoteRecyclerAdapter
@@ -13,6 +14,8 @@ import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.ActivityNoteBinding
 import com.ir.ali.note.datamodel.NotesDataModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -124,11 +127,11 @@ class NoteActivity : AppCompatActivity() {
         binding.icArchiveNote.setOnClickListener {
             val noteId = intent.getIntExtra(DataBaseHelper.NOTES_ID, 0)
             databaseDao.updateNoteArchiveState(noteId, DataBaseHelper.STATE_TRUE)
-            Snackbar.make(
-                binding.root,
-                "Note Archived",
-                Snackbar.LENGTH_SHORT
-            ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
+            finish()
+            val sharedPreferences = getSharedPreferences("ARCHIVE_SNACK_BAR", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("SHOW_ARCHIVE_SNACK_BAR", true)
+            editor.apply()
         }
     }
 
@@ -178,9 +181,10 @@ class NoteActivity : AppCompatActivity() {
             if (noteTitle.isNotEmpty() || noteText.isNotEmpty())
                 saveNote(noteTitle, noteText)
             else if (noteTitle.isEmpty() && noteText.isEmpty()) {
-                val sharedPreferences = getSharedPreferences("SNACK_BAR", MODE_PRIVATE)
+                val sharedPreferences =
+                    getSharedPreferences("EMPTY_NOTE_SNACK_BAR", MODE_PRIVATE)
                 val editor = sharedPreferences.edit()
-                editor.putBoolean("SHOW_SNACK_BAR", true)
+                editor.putBoolean("SHOW_EMPTY_NOTE_SNACK_BAR", true)
                 editor.apply()
             }
         } else {
