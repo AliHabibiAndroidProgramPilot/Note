@@ -2,10 +2,12 @@ package com.ir.ali.note.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.ir.ali.note.NoteActivity
 import com.ir.ali.note.database.DataBaseHelper
 import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.NoteArchvieItemBinding
@@ -48,7 +50,12 @@ class ArchiveNoteRecyclerAdapter(
                 // TODO UNARCHIVE FROM LIST AND DATABASE
             }
             binding.secondRoot.setOnClickListener {
-                //TODO INTENT TO NOTE ACTIVITY
+                context.startActivity(
+                    Intent(context, NoteActivity::class.java)
+                        // Specifies Archive Notes So To Manage Them
+                        .putExtra(DataBaseHelper.NOTES_ID, noteDetails.noteId)
+                        .putExtra("IS_ARCHIVE_NOTE", true)
+                )
             }
         }
     }

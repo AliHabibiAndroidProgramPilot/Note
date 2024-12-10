@@ -60,6 +60,11 @@ class NoteActivity : AppCompatActivity() {
             binding.icPinNote.visibility = View.GONE
             binding.icDeleteNote.setImageResource(R.drawable.ic_delete_forever)
         }
+        if (intent.getBooleanExtra("IS_ARCHIVE_NOTE", false)) {
+            binding.icPinNote.visibility = View.GONE
+            binding.icDeleteNote.visibility = View.GONE
+            binding.icArchiveNote.setImageResource(R.drawable.ic_unarchive)
+        }
         if (intent.getBooleanExtra("IS_NEW_NOTE", false)) {
             binding.noteDate.text = getDate()
             //region request Focus
