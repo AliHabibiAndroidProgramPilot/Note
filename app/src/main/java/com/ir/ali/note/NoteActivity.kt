@@ -29,6 +29,7 @@ class NoteActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         //endregion
+        recyclerAdapter = NoteRecyclerAdapter(this, databaseDao)
         if (intent.getBooleanExtra("IS_TRASH_NOTE", false)) {
             val edtTitle = binding.edtNoteTitle
             val edtText = binding.edtNoteText
@@ -57,6 +58,7 @@ class NoteActivity : AppCompatActivity() {
             edtText.setOnClickListener(showSnackBar)
             binding.icArchiveNote.visibility = View.GONE
             binding.icPinNote.visibility = View.GONE
+            binding.icDeleteNote.setImageResource(R.drawable.ic_delete_forever)
         }
         if (intent.getBooleanExtra("IS_NEW_NOTE", false)) {
             binding.noteDate.text = getDate()
@@ -72,40 +74,46 @@ class NoteActivity : AppCompatActivity() {
             binding.edtNoteText.text = editable.newEditable(note.noteText)
             binding.noteDate.text = editable.newEditable(note.noteDate)
         }
+        // TODO So many if and else here. optimize code later.
         binding.icDeleteNote.setOnClickListener {
-            if (
-                binding.edtNoteTitle.text.isEmpty() && binding.edtNoteText.text.isEmpty()
-            )
+            if (intent.getBooleanExtra("IS_TRASH_NOTE", false)) {
+                val noteId = intent.getIntExtra(DataBaseHelper.NOTES_ID, 0)
+                databaseDao.deleteTrashedNotes(noteId)
                 finish()
-            else {
-                //region Create Alert Dialog
-                MaterialAlertDialogBuilder(this).apply {
-                    setTitle("Move this note to trash ?")
-                    setMessage(
-                        "Note will be move to trash, you still can have access to note in trash"
-                    )
-                    setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-                    setPositiveButton("Delete") { _, _ ->
-                        if (intent.getBooleanExtra("IS_NEW_NOTE", false))
-                            finish()
-                        else {
-                            recyclerAdapter =
-                                NoteRecyclerAdapter(this@NoteActivity, databaseDao)
-                            val noteId = intent.getIntExtra(DataBaseHelper.NOTES_ID, 0)
-                            databaseDao.updateNoteDeleteState(
-                                noteId, DataBaseHelper.STATE_TRUE
-                            )
-                            recyclerAdapter.notifyRecycler(
-                                databaseDao.getNotes(
-                                    DataBaseHelper.STATE_FALSE,
-                                    DataBaseHelper.STATE_FALSE
+            } else {
+                if (
+                    binding.edtNoteTitle.text.isEmpty() && binding.edtNoteText.text.isEmpty()
+                )
+                    finish()
+                else {
+                    //region Create Alert Dialog
+                    MaterialAlertDialogBuilder(this).apply {
+                        setTitle("Move this note to trash ?")
+                        setMessage(
+                            "Note will be move to trash, you still can have access to note in trash"
+                        )
+                        setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+                        setPositiveButton("Delete") { _, _ ->
+                            if (intent.getBooleanExtra("IS_NEW_NOTE", false))
+                                finish()
+                            else {
+                                val noteId =
+                                    intent.getIntExtra(DataBaseHelper.NOTES_ID, 0)
+                                databaseDao.updateNoteDeleteState(
+                                    noteId, DataBaseHelper.STATE_TRUE
                                 )
-                            )
-                            finish()
+                                recyclerAdapter.notifyRecycler(
+                                    databaseDao.getNotes(
+                                        DataBaseHelper.STATE_FALSE,
+                                        DataBaseHelper.STATE_FALSE
+                                    )
+                                )
+                                finish()
+                            }
                         }
-                    }
-                }.create().show()
-                //endregion
+                    }.create().show()
+                    //endregion
+                }
             }
         }
     }

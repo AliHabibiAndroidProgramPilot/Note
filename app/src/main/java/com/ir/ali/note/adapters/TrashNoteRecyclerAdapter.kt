@@ -3,7 +3,6 @@ package com.ir.ali.note.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ class TrashNoteRecyclerAdapter(
     private val context: Context,
     private val databaseDao: NoteDAO
 ) : Adapter<TrashNoteRecyclerAdapter.CustomViewHolder>() {
-    private val trashNotes: ArrayList<NoteDataModelForRecycler> =
+    private var trashNotes: ArrayList<NoteDataModelForRecycler> =
         databaseDao.getNotes(DataBaseHelper.STATE_TRUE, DataBaseHelper.STATE_FALSE)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
@@ -36,6 +35,14 @@ class TrashNoteRecyclerAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun notifyRecycler() {
         trashNotes.clear()
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifyRecycler(changedData: ArrayList<NoteDataModelForRecycler>) {
+        //  Relying On notifyDataSetChanged As A Last Resort
+        trashNotes.clear()
+        trashNotes.addAll(changedData)
         notifyDataSetChanged()
     }
 
@@ -66,10 +73,9 @@ class TrashNoteRecyclerAdapter(
             binding.secondRoot.setOnClickListener {
                 context.startActivity(
                     Intent(context, NoteActivity::class.java)
-                        .putExtra("IS_NEW_NOTE", false)
-                        // Specifies Trash Notes So To Make Edit Texts Not Editable
-                        .putExtra("IS_TRASH_NOTE", true)
+                        // Specifies Trash Notes So To Manage Them
                         .putExtra(DataBaseHelper.NOTES_ID, noteDetails.noteId)
+                        .putExtra("IS_TRASH_NOTE", true)
                 )
             }
         }

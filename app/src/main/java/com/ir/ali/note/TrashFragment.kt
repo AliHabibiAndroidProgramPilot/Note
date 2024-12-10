@@ -70,4 +70,11 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+        trashNoteAdapter.notifyRecycler(
+            databaseDao.getNotes(DataBaseHelper.STATE_TRUE, DataBaseHelper.STATE_FALSE)
+        )
+    }
+
 }
