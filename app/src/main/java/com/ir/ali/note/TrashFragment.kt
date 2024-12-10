@@ -23,8 +23,10 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTrashBinding.inflate(layoutInflater)
-        databaseDao = NoteDAO(DataBaseHelper(requireContext()))
+        val context = requireContext()
+        databaseDao = NoteDAO(DataBaseHelper(context))
         mainNotesRecycler = NoteRecyclerAdapter(requireActivity(), databaseDao)
+        trashNoteAdapter = TrashNoteRecyclerAdapter(context, databaseDao)
         return binding.root
     }
 
@@ -64,6 +66,7 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
             }
             R.id.DeleteAllItems -> {
                 databaseDao.deleteTrashedNotes()
+                //TODO needs to notify recycler in another where too.
                 trashNoteAdapter.notifyRecycler()
             }
         }

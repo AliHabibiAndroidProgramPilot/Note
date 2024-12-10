@@ -116,6 +116,15 @@ class NoteActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.icArchiveNote.setOnClickListener {
+            val noteId = intent.getIntExtra(DataBaseHelper.NOTES_ID, 0)
+            databaseDao.updateNoteArchiveState(noteId, DataBaseHelper.STATE_TRUE)
+            Snackbar.make(
+                binding.root,
+                "Note Archived",
+                Snackbar.LENGTH_SHORT
+            ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
+        }
     }
 
     private fun saveNote(noteTitle: String, noteText: String) {

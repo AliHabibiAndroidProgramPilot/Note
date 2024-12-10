@@ -25,8 +25,10 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentArchiveBinding.inflate(layoutInflater)
-        databaseDao = NoteDAO(DataBaseHelper(requireContext()))
+        val context = requireContext()
+        databaseDao = NoteDAO(DataBaseHelper(context))
         mainNotesRecycler = NoteRecyclerAdapter(requireActivity(), databaseDao)
+        archiveNoteRecyclerAdapter = ArchiveNoteRecyclerAdapter(context, databaseDao)
         return binding.root
     }
 
