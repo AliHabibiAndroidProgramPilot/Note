@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -51,15 +50,16 @@ class MainActivity : AppCompatActivity() {
             //endregion
         }
         val rootDrawerLayout = binding.rootDrawerLayout
+        val navigationView = binding.navigationView
         val navigationDrawerToggle =
             ActionBarDrawerToggle(this, rootDrawerLayout, R.string.open, R.string.close)
         navigationDrawerToggle.isDrawerIndicatorEnabled = true
         navigationDrawerToggle.isDrawerSlideAnimationEnabled = true
         rootDrawerLayout.addDrawerListener(navigationDrawerToggle)
-        binding.icOpenDrawer.setOnClickListener { rootDrawerLayout.openDrawer(GravityCompat.START) }
         navigationDrawerToggle.syncState()
-        binding.navigationView.setItemTextAppearanceActiveBoldEnabled(false)
-        binding.navigationView.setNavigationItemSelectedListener {
+        binding.icOpenDrawer.setOnClickListener { rootDrawerLayout.openDrawer(GravityCompat.START) }
+        navigationView.setItemTextAppearanceActiveBoldEnabled(false)
+        navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.NotesItem -> {
                     if (supportFragmentManager.fragments.isNotEmpty()) {
@@ -159,12 +159,12 @@ class MainActivity : AppCompatActivity() {
         }
         supportFragmentManager.addOnBackStackChangedListener {
             when (supportFragmentManager.fragments.lastOrNull()) {
-                is TrashFragment -> binding.navigationView.setCheckedItem(R.id.TrashItem)
-                is ArchiveFragment -> binding.navigationView.setCheckedItem(R.id.ArchiveItem)
-                is SettingFragment -> binding.navigationView.setCheckedItem(R.id.SettingItem)
-                is AboutFragment -> binding.navigationView.setCheckedItem(R.id.AboutItem)
+                is TrashFragment -> navigationView.setCheckedItem(R.id.TrashItem)
+                is ArchiveFragment -> navigationView.setCheckedItem(R.id.ArchiveItem)
+                is SettingFragment -> navigationView.setCheckedItem(R.id.SettingItem)
+                is AboutFragment -> navigationView.setCheckedItem(R.id.AboutItem)
                 null -> {
-                    binding.navigationView.setCheckedItem(R.id.NotesItem)
+                    navigationView.setCheckedItem(R.id.NotesItem)
                     recyclerAdapter.notifyRecycler(
                         databaseDao.getNotes(DataBaseHelper.STATE_FALSE, DataBaseHelper.STATE_FALSE)
                     )
