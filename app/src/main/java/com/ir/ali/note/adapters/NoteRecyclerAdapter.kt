@@ -17,6 +17,7 @@ import com.ir.ali.note.database.NoteDAO
 import com.ir.ali.note.databinding.NoteListItemBinding
 import com.ir.ali.note.datamodel.NoteDataModelForRecycler
 
+@Suppress("DEPRECATION")
 class NoteRecyclerAdapter(
     private val contextActivity: Activity,
     private val databaseDao: NoteDAO
